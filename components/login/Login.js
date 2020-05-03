@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#2ecc71',
+        backgroundColor: '#9b59b6',
     },
     loginHeader: {
         height: 40,
