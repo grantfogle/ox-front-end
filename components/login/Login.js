@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
 
 class Login extends Component {
 
@@ -9,11 +9,18 @@ class Login extends Component {
 
     render() {
 
-        const { background, text } = styles;
+        const { background, formRow, text, loginToggle, loginButtonText } = styles;
         return (
             <View style={background}>
                 {this.showText()}
-                <Text style={text}>Cats Login Here</Text>
+                <Text style={text}>Welcome to Ox</Text>
+                <View style={formRow}>
+                    <TextInput />
+                </View>
+                <View style={loginToggle}>
+                    <TouchableOpacity><Text style={loginButtonText}>Login</Text></TouchableOpacity>
+                    <TouchableOpacity><Text style={loginButtonText}>Sign Up</Text></TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -28,11 +35,26 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#27ae60',
     },
     text: {
         height: 40,
-        width: 100,
+        width: 200,
+        fontSize: 40,
+        color: '#fff'
+    },
+    formRow: {
+        width: 200,
+        height: 40,
+        backgroundColor: '#fff',
+    },
+    loginToggle: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: 200,
+    },
+    loginButtonText: {
         fontSize: 20,
-        color: '#000'
+        color: '#fff',
     }
 })
