@@ -10,10 +10,10 @@ const Start = () => {
     const { container, button, buttonText } = styles;
     return (
         <View style={container}>
-            <TouchableOpacity style={button} onPress={() => console.log('dogs')}>
+            <TouchableOpacity style={button} onPress={() => Actions.createPlaylist()}>
                 <Text style={buttonText}>Start a Playlist</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={button}>
+            <TouchableOpacity style={button} onPress={() => Actions.findPlaylist()}>
                 <Text style={buttonText}>Find a Playlist</Text>
             </TouchableOpacity>
         </View>
