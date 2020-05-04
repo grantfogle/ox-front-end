@@ -13,7 +13,7 @@ class CreatePlaylist extends Component {
         }
     }
     render() {
-        const { container, headerText, formText, formButton, formCircle } = styles;
+        const { container, headerText, formText, formButton, formButtonSelected, formCircle } = styles;
         return (
             <View style={container}>
                 <Text style={headerText}>Create Your Playlist</Text>
@@ -28,11 +28,11 @@ class CreatePlaylist extends Component {
                     <View style={formCircle} />
                     <Text style={formText}>Allow Veto</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={formButton}>
+                <TouchableOpacity style={formButtonSelected}>
                     <View style={formCircle} />
                     <Text style={formText}>Allow Replays</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => Actions.playlistHome()}>
                     <Text style={formText}>Get Started ----></Text>
                 </TouchableOpacity>
             </View>
@@ -83,5 +83,18 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#000',
+        backgroundColor: '#fff',
+    },
+    formButtonSelected: {
+        width: '90%',
+        height: 80,
+        paddingLeft: 20,
+        marginBottom: 20,
+        borderWidth: 2,
+        borderColor: '#9b59b6',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#9b59b6',
     }
 });
