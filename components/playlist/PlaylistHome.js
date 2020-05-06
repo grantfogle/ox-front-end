@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Search from './Search';
+import SearchBar from './search/SearchBar';
+import SearchResults from './search/SearchResults';
 
 class PlaylistHome extends Component {
     constructor(props) {
         super(props);
         this.state = {
             playlist: [],
+            showResults: true,
         }
     }
+
+    displaySearchResults() {
+        return this.state.showResults ? <SearchResults /> : <Text>''</Text>;
+    }
+
     render() {
         const { container } = styles;
         return (
             <View style={container}>
-                <Search />
+                <SearchBar />
+                {this.displaySearchResults()}
                 {/* <Playlist /> */}
             </View>
         );

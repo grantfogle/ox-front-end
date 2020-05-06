@@ -16,6 +16,8 @@ const Start = () => {
             <TouchableOpacity style={button} onPress={() => Actions.findPlaylist()}>
                 <Text style={buttonText}>Find a Playlist</Text>
             </TouchableOpacity>
+            {/* View Playlist
+            Add song to playlist */}
         </View>
     )
 }

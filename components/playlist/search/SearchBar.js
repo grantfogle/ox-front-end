@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 
-class CreatePlaylist extends Component {
+class SearchBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +18,7 @@ class CreatePlaylist extends Component {
     }
 }
 
-export default CreatePlaylist;
+export default SearchBar;
 
 const styles = StyleSheet.create({
     searchBox: {
