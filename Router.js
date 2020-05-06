@@ -15,7 +15,7 @@ const RouterComponent = () => {
                 <Scene key="start" component={Start} title="Start/Find a Playlist" />
                 <Scene key="createPlaylist" component={CreatePlaylist} title="Create Playlist" />
                 <Scene key="findPlaylist" component={FindPlaylist} title="Find a Playlist" />
-                <Scene key="playlistHome" component={PlaylistHome} title="Find a Playlist" />
+                <Scene key="playlistHome" component={PlaylistHome} title="Playlist" />
             </Stack>
         </Router>
     )
