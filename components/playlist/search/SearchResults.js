@@ -1,13 +1,22 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 
+// displaySongsReturned() {
+//     for (let i = 0; i < 4; i++) {
+//     }
+// }
+
+
 const SearchResults = () => {
     const { searchResults, songRow, songName, songText } = styles;
+    // Allow add, un add, star unstar allow un do of moves
     return (
         <View style={searchResults}>
             <View style={songRow}>
                 <Text style={songName}>I want it that way</Text>
                 <Text style={songText}>Brittany Spears</Text>
+                <Text style={songText}>Star</Text>
+                <Text style={songText}>Add</Text>
             </View>
         </View>
     )
@@ -17,17 +26,20 @@ export default SearchResults;
 
 const styles = {
     container: {
-        flex: 1,
+        width: '100%',
         backgroundColor: '#fff',
-        flexDirection: 'row',
-        alignItems: 'start',
-        justifyContent: 'space-between',
     },
     songRow: {
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: 40,
+        paddingLeft: 5,
+        paddingRight: 5,
     },
     songName: {
-        fontSize: 25,
+        fontSize: 20,
     },
     songText: {
         fontSize: 16,

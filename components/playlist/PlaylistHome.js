@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { Actions } from 'react-native-router-flux';
 import SearchBar from './search/SearchBar';
 import SearchResults from './search/SearchResults';
+import clientId from '../../secret';
 
 class PlaylistHome extends Component {
     constructor(props) {
@@ -10,8 +11,25 @@ class PlaylistHome extends Component {
         this.state = {
             playlist: [],
             showResults: true,
+            searchSongs: [],
+            userSearch: 'FKJ'
         }
     }
+
+    // async getSpotifyResults(userSearch) {
+    //     const query = 'https://api.spotify.com/v1/search/q=' + fkj.replace(' ', '+');
+    //     fetch(query, {
+    //         method: 'GET',
+    //         headers: {
+    //             Authorization: clientId
+    //         },
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             this.searchSongs = data;
+    //         })
+    // }
 
     displaySearchResults() {
         return this.state.showResults ? <SearchResults /> : <Text>''</Text>;
@@ -23,6 +41,7 @@ class PlaylistHome extends Component {
             <View style={container}>
                 <SearchBar />
                 {this.displaySearchResults()}
+                {/* {this.getSpotifyResults()} */}
                 {/* <Playlist /> */}
             </View>
         );
