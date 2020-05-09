@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { AuthRequest } from 'expo-auth-session';
 
 
 class Login extends Component {
@@ -12,8 +13,10 @@ class Login extends Component {
         }
     }
 
-    showText() {
-        console.log('cats')
+    async showText() {
+        // const sesh = await AuthSession.getRedirectUrl();
+        // await AuthSession.makeRedirectUri({ useProxy: false })
+        console.log(AuthRequest)
     }
 
     render() {
