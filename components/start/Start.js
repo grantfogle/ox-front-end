@@ -37,8 +37,12 @@ async function getSpotifyCredentials() {
 
 async function getAuthorizationCode() {
     // const credentials = await getSpotifyCredentials();
-    const credentials = getSpotifyCredentials();
+    const credentials = {
+        clientId: clientId,
+        secret: clientSecret,
+    };;
     const redirectUrl = AuthSession.getRedirectUrl();
+    console.log(2);
     const result = await AuthSession.startAsync({
         authUrl:
             'https://accounts.spotify.com/authorize' +
@@ -48,24 +52,37 @@ async function getAuthorizationCode() {
             '&scope=' + encodeURIComponent(scopes) +
             '&redirect_uri=' + encodeURIComponent(redirectUrl)
     })
+    console.log(3);
+    console.log('result', result);
     return result.params.code;
 }
 
+// get auth token
 async function getAccessToken() {
     const authorizationCode = await getAuthorizationCode();
     // const credentials = await getSpotifyCredentials();
-    const credentials = getSpotifyCredentials();
-    const credentialsToBase64 = base64.encode(`${credentials.clientId}:${credentials.secret}`);
-    const response = await fetch('https://accounts.spotify.com/api/token', {
+    const credentials = {
+        clientId: clientId,
+        secret: clientSecret,
+        redirectUri: AuthSession.getRedirectUrl(),
+    };
+    // const credentialsToBase64 = base64.encode(`${credentials.clientId}:${credentials.secret}`);
+    const credentialsToBase64 = 'NzYzYWNlZTk2M2IyNGI4NGE0YTM1ZDRhYjU4NzRiOTk6YTZiZjA5ZDAwNGJiNDBkMzg1MDc5YTM1ODU2ZGRlY2I='
+
+    await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
             Authorization: `Basic ${credentialsToBase64}`,
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=${credentials.redirectUri}`,
-    });
-    const responseJson = await response.json();
-    console.log('response Json', responseJson);
+        body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=${
+            credentials.redirectUri}`,
+    })
+        .then(response => response.json())
+        .then(data => {
+            const retreivedData = data;
+            console.log('data', data);
+        })
     const {
         access_token: accessToken,
         refresh_token: refreshToken,
@@ -76,23 +93,6 @@ async function getAccessToken() {
     await setUserData('refreshToken', refreshToken);
     await setUserData('expirationTime', expirationTime);
 }
-// const credentialsConvertedToBase64 = Basic + btoa(clientId + ":" + clientSecret);
-// const url = 'https://accounts.spotify.com/api/token';
-// fetch(url, {
-//     method: 'POST',
-//     headers: {
-//         Authorization: credentialsConvertedToBase64
-//     },
-//     body: {
-//         grant_type: 'client_credentials'
-//     }
-// })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data)
-//         this.searchSongs = data;
-//     })
-// get auth token
 // create playlist
 // find a playlist
 // find a song
