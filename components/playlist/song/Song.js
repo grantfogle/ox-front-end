@@ -41,7 +41,7 @@ const styles = {
         fontSize: 16,
     },
     vetoSong: {
-        height: 20,
+        height: 36,
         width: 60,
         backgroundColor: '#c0392b',
         borderRadius: 5,
