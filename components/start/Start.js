@@ -60,7 +60,6 @@ async function getAuthorizationCode() {
 // get auth token
 async function getAccessToken() {
     const authorizationCode = await getAuthorizationCode();
-    // const credentials = await getSpotifyCredentials();
     const credentials = {
         clientId: clientId,
         secret: clientSecret,

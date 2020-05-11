@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { Actions } from 'react-native-router-flux';
 import SearchBar from './search/SearchBar';
 import SearchResults from './search/SearchResults';
+import Song from './song/Song';
 import clientId from '../../secret';
 
 class PlaylistHome extends Component {
@@ -10,12 +11,19 @@ class PlaylistHome extends Component {
         super(props);
         this.state = {
             playlist: [],
-            showResults: true,
+            showResults: false,
             searchSongs: [],
             userSearch: 'FKJ'
         }
     }
 
+    songArr = [
+        { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
+        { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
+        { id: 3, name: 'Apparently', artist: 'J. Cole' },
+        { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
+        { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
+    ]
     // async getSpotifyResults(userSearch) {
     //     const query = 'https://api.spotify.com/v1/search/q=' + fkj.replace(' ', '+');
     //     fetch(query, {
@@ -32,7 +40,11 @@ class PlaylistHome extends Component {
     // }
 
     displaySearchResults() {
-        return this.state.showResults ? <SearchResults /> : <Text>''</Text>;
+        return this.state.showResults ? <SearchResults /> : <View></View>;
+    }
+
+    displayPlaylist() {
+        return this.songArr.map(song => <Song key={song.id} name={song.name} artist={song.artist} />);
     }
 
     render() {
@@ -41,8 +53,8 @@ class PlaylistHome extends Component {
             <View style={container}>
                 <SearchBar />
                 {this.displaySearchResults()}
+                {this.displayPlaylist()}
                 {/* {this.getSpotifyResults()} */}
-                {/* <Playlist /> */}
             </View>
         );
     }
@@ -54,7 +66,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        height: '100%',
         // justifyContent: 'center',
         backgroundColor: '#9b59b6',
     },
