@@ -5,8 +5,10 @@ import SearchBar from './search/SearchBar';
 import SearchResults from './search/SearchResults';
 import Song from './song/Song';
 import clientId from '../../secret';
+import { OxContext } from '../../contexts/OxContext';
 
 class PlaylistHome extends Component {
+    static contextType = OxContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -17,13 +19,13 @@ class PlaylistHome extends Component {
         }
     }
 
-    songArr = [
-        { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
-        { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
-        { id: 3, name: 'Apparently', artist: 'J. Cole' },
-        { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
-        { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
-    ]
+    // songArr = [
+    //     { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
+    //     { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
+    //     { id: 3, name: 'Apparently', artist: 'J. Cole' },
+    //     { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
+    //     { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
+    // ]
     // async getSpotifyResults(userSearch) {
     //     const query = 'https://api.spotify.com/v1/search/q=' + fkj.replace(' ', '+');
     //     fetch(query, {
@@ -44,7 +46,7 @@ class PlaylistHome extends Component {
     }
 
     displayPlaylist() {
-        return this.songArr.map(song => <Song key={song.id} name={song.name} artist={song.artist} />);
+        return this.context.currentPlaylist.map(song => <Song key={song.id} name={song.name} artist={song.artist} />);
     }
 
     render() {

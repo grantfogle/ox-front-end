@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#9b59b6',
     },
     headerText: {
         fontSize: 40,
