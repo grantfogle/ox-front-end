@@ -9,6 +9,7 @@ class OxContextProvider extends Component {
         username: '',
         spotifyUsername: '',
         spotifyId: '',
+        authorizationCode: '',
         spotifyToken: '',
         playlist: [],
         songSearch: [],
@@ -27,6 +28,7 @@ class OxContextProvider extends Component {
         'app-remote-control',
         'playlist-modify-public',
     ]
+
     scopes = this.scopesArr.join(' ');
 
     async getSpotifyCredentials() {
@@ -38,13 +40,13 @@ class OxContextProvider extends Component {
         return obj;
     };
 
-    getAuthorizationCode = async () => {
+    async getAuthorizationCode() {
         // const credentials = await getSpotifyCredentials();
-
+        console.log('it called auth code');
         const credentials = {
             clientId: clientId,
             secret: clientSecret,
-        };;
+        };
         const redirectUrl = AuthSession.getRedirectUrl();
         const result = await AuthSession.startAsync({
             authUrl:
@@ -55,16 +57,15 @@ class OxContextProvider extends Component {
                 '&scope=' + encodeURIComponent(this.scopes) +
                 '&redirect_uri=' + encodeURIComponent(redirectUrl)
         })
-        console.log('result', result);
-        return result.params.code;
-    }
 
+        // this.setState({ authorizationCode: result.params.code });
+        console.log(result.params.code)
+        return result.params.code;
+    };
     // get auth token
-    async getAccessToken() {
+    async getAccessToken(authorizationCode) {
         console.log(1);
-        const authorizationCode = await this.getAuthorizationCode();
-        console.log(authorizationCode);
-        console.log(this.getAuthorizationCode());
+        // const authorizationCode = await this.getAuthorizationCode();
         const credentials = {
             clientId: clientId,
             secret: clientSecret,
@@ -72,7 +73,6 @@ class OxContextProvider extends Component {
         };
         // const credentialsToBase64 = base64.encode(`${credentials.clientId}:${credentials.secret}`);
         const credentialsToBase64 = 'NzYzYWNlZTk2M2IyNGI4NGE0YTM1ZDRhYjU4NzRiOTk6YTZiZjA5ZDAwNGJiNDBkMzg1MDc5YTM1ODU2ZGRlY2I='
-        console.log(1.1)
         await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
@@ -96,7 +96,8 @@ class OxContextProvider extends Component {
         await setUserData('accessToken', accessToken);
         await setUserData('refreshToken', refreshToken);
         await setUserData('expirationTime', expirationTime);
-    }
+        return 'cats';
+    };
     // create playlist
     // find a playlist
     // find a song
@@ -105,7 +106,7 @@ class OxContextProvider extends Component {
     // get playback info (what's played, current tracks, skip, repeat, pause)
     render() {
         return (
-            <OxContext.Provider value={{ ...this.state, getAccessToken: this.getAccessToken }}>
+            <OxContext.Provider value={{ ...this.state, getAccessToken: this.getAccessToken, getAuthorizationCode: this.getAuthorizationCode }}>
                 {this.props.children}
             </OxContext.Provider>
         );

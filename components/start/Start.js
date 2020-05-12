@@ -9,10 +9,12 @@ import { OxContext } from '../../contexts/OxContext';
 const Start = () => {
     const { container, button, buttonText } = styles;
     return (
-        <OxContext.Consumer>{(context) => {
+        <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode }) => {
             return (
                 <View style={container}>
-                    <TouchableOpacity style={button} onPress={context.getAccessToken}>
+                    <TouchableOpacity style={button} onPress={() => {
+                        getAccessToken(getAuthorizationCode())
+                    }}>
                         <Text style={buttonText}>Start a Playlist</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={button} onPress={() => Actions.findPlaylist()}>
