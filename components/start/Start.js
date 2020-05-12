@@ -12,8 +12,9 @@ const Start = () => {
         <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode }) => {
             return (
                 <View style={container}>
-                    <TouchableOpacity style={button} onPress={() => {
-                        getAccessToken(getAuthorizationCode())
+                    <TouchableOpacity style={button} onPress={async () => {
+                        const authCode = await getAuthorizationCode();
+                        getAccessToken(authCode);
                     }}>
                         <Text style={buttonText}>Start a Playlist</Text>
                     </TouchableOpacity>

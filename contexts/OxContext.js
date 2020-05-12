@@ -23,14 +23,6 @@ class OxContextProvider extends Component {
         ],
     }
 
-    scopesArr = [
-        'user-read-currently-playing',
-        'app-remote-control',
-        'playlist-modify-public',
-    ]
-
-    scopes = this.scopesArr.join(' ');
-
     async getSpotifyCredentials() {
         const obj = {
             clientId: clientId,
@@ -41,31 +33,30 @@ class OxContextProvider extends Component {
     };
 
     async getAuthorizationCode() {
-        // const credentials = await getSpotifyCredentials();
-        console.log('it called auth code');
-        const credentials = {
-            clientId: clientId,
-            secret: clientSecret,
-        };
+        scopesArr = [
+            'user-read-currently-playing',
+            'app-remote-control',
+            'playlist-modify-public',
+        ]
+        scopes = scopesArr.join(' ');
         const redirectUrl = AuthSession.getRedirectUrl();
         const result = await AuthSession.startAsync({
             authUrl:
                 'https://accounts.spotify.com/authorize' +
                 '?response_type=code' +
                 '&client_id=' +
-                credentials.clientId +
-                '&scope=' + encodeURIComponent(this.scopes) +
+                clientId +
+                '&scope=' + encodeURIComponent(scopes) +
                 '&redirect_uri=' + encodeURIComponent(redirectUrl)
         })
-
+        // console.log(result.params.code)
         // this.setState({ authorizationCode: result.params.code });
-        console.log(result.params.code)
         return result.params.code;
     };
     // get auth token
     async getAccessToken(authorizationCode) {
-        console.log(1);
         // const authorizationCode = await this.getAuthorizationCode();
+        console.log(1);
         const credentials = {
             clientId: clientId,
             secret: clientSecret,
