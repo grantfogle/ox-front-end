@@ -3,18 +3,19 @@ import { Actions } from 'react-native-router-flux';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { clientId, clientSecret, token } from '../../secret';
 import * as AuthSession from 'expo-auth-session';
-import base64 from 'react-native-base64';
 import { OxContext } from '../../contexts/OxContext';
 
 const Start = () => {
     const { container, button, buttonText } = styles;
     return (
-        <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode }) => {
+        <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode, getUserPlaylists }) => {
             return (
                 <View style={container}>
                     <TouchableOpacity style={button} onPress={async () => {
                         const authCode = await getAuthorizationCode();
-                        getAccessToken(authCode);
+                        await getAccessToken(authCode);
+                        await getUserPlaylists();
+                        Actions.createPlaylist();
                     }}>
                         <Text style={buttonText}>Start a Playlist</Text>
                     </TouchableOpacity>
