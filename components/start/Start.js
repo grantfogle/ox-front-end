@@ -8,13 +8,13 @@ import { OxContext } from '../../contexts/OxContext';
 const Start = () => {
     const { container, button, buttonText } = styles;
     return (
-        <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode, getUserPlaylists }) => {
+        <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode, getUserInfo }) => {
             return (
                 <View style={container}>
                     <TouchableOpacity style={button} onPress={async () => {
                         const authCode = await getAuthorizationCode();
                         await getAccessToken(authCode);
-                        await getUserPlaylists();
+                        await getUserInfo();
                         Actions.createPlaylist();
                     }}>
                         <Text style={buttonText}>Start a Playlist</Text>

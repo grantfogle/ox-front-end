@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 import * as AuthSession from 'expo-auth-session';
 import { clientId, clientSecret } from '../secret';
 import base64 from 'react-native-base64';
-import SpotifyWebApi from 'spotify-web-api-node';
+import SpotifyWebAPI from 'spotify-web-api-js';
 
 export const OxContext = createContext();
 
@@ -10,7 +10,7 @@ class OxContextProvider extends Component {
     state = {
         username: '',
         spotifyUsername: '',
-        spotifyId: '',
+        spotifyUserId: '',
         authorizationCode: '',
         spotifyToken: '',
         refreshToken: '',
@@ -27,20 +27,10 @@ class OxContextProvider extends Component {
         ],
     }
 
-    spotifyApi = new SpotifyWebApi({
-        clientId: clientId,
-        clientSecret: clientSecret,
-        redirectUri: AuthSession.getRedirectUrl(),
-    });
+    spotifyApi = new SpotifyWebAPI();
 
-    async getSpotifyCredentials() {
-        const obj = {
-            clientId: clientId,
-            secret: clientSecret,
-            redirectUri: AuthSession.getRedirectUrl(),
-        };
-        return obj;
-    };
+
+
 
     async getAuthorizationCode() {
         const scopesArr = [
@@ -80,9 +70,8 @@ class OxContextProvider extends Component {
             .then(response => response.json())
             .then(data => {
                 const retreivedData = data;
-                spotifyApi.setAccessToken(data.access_token);
                 this.setState({ spotifyToken: data.access_token })
-                console.log('data', data);
+                this.spotifyApi.setAccessToken(data.access_token);
             });
         // const {
         //     access_token: accessToken,
@@ -95,13 +84,21 @@ class OxContextProvider extends Component {
         // await setUserData('expirationTime', expirationTime);
     };
     // Get spotify user
-    async getUserPlaylists() {
-        const { id: userId } = await sp.getMe();
-        const { item: playlists } = await sp.getUserPlaylists(userId, { limit: 50 });
-        console.log('playlists', playlists)
-        return playlists;
+    // async getValidSPObj() {
+    //     const accessToken = await getUserData('accessToken');
+    //     var sp = new SpotifyWebAPI();
+    //     await sp.setAccessToken(accessToken);
+    //     return sp;
+    // }
+    async getUserInfo() {
+        const userInfo = await this.spotifyApi.getMe();
+        this.setState({ spotifyUserId: userInfo.uri })
+        console.log(userInfo);
     }
     // create playlist
+    async createPlaylist() {
+        this.spotifyApi.createPlaylist(this.state.spotifyUserId, { name: 'party playlist', public: true, collaborative: true })
+    }
 
     // find a playlist
     // find a song
@@ -147,7 +144,7 @@ class OxContextProvider extends Component {
             <OxContext.Provider value={{
                 ...this.state, getAccessToken: this.getAccessToken.bind(this),
                 getAuthorizationCode: this.getAuthorizationCode.bind(this),
-                getUserPlaylists: this.getUserPlaylists
+                getUserInfo: this.getUserInfo.bind(this)
             }}>
                 {this.props.children}
             </OxContext.Provider>
