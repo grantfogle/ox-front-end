@@ -27,7 +27,8 @@ export default SearchResults;
 const styles = {
     container: {
         width: '100%',
-        backgroundColor: '#fff',
+        height: 200,
+        backgroundColor: 'black',
     },
     songRow: {
         backgroundColor: '#fff',

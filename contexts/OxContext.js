@@ -26,12 +26,11 @@ class OxContextProvider extends Component {
             { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
             { id: 6, name: '22', artist: 'Taylor Swift' }
         ],
+        searchedSongs: {},
+        showSearchResults: true,
     }
 
     spotifyApi = new SpotifyWebAPI();
-
-
-
 
     async getAuthorizationCode() {
         const scopesArr = [
@@ -106,12 +105,18 @@ class OxContextProvider extends Component {
     }
     // get playlist tracks
     async getPlaylistTracks(playlistId) {
-        this.spotifyApi.getPlaylist(playlistId)
+        this.spotifyApi.getPlaylist(playlistId);
     }
     // find a song
     async searchSongs(query) {
-        const returnedSongs = this.spotifyApi.search(query, ['artist', 'track']);
-        this.setState({ songs: returnedSongs })
+        this.spotifyApi.search(query, ['artist', 'track'])
+            .then(response => {
+                console.log('data', response);
+                this.setState({ searchedSongs: response })
+            })
+        if (this.state.searchedSongs.length > 0) {
+            this.setState({ searchedSongs: true });
+        }
     }
     // add items to to playlist
     async addTracksToPlaylist(song) {
@@ -126,7 +131,8 @@ class OxContextProvider extends Component {
             <OxContext.Provider value={{
                 ...this.state, getAccessToken: this.getAccessToken.bind(this),
                 getAuthorizationCode: this.getAuthorizationCode.bind(this),
-                getUserInfo: this.getUserInfo.bind(this)
+                getUserInfo: this.getUserInfo.bind(this),
+                searchSongs: this.searchSongs.bind(this),
             }}>
                 {this.props.children}
             </OxContext.Provider>

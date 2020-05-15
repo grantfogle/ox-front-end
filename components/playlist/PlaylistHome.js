@@ -13,7 +13,6 @@ class PlaylistHome extends Component {
         super(props);
         this.state = {
             playlist: [],
-            showResults: false,
             searchSongs: [],
             userSearch: 'FKJ'
         }
@@ -42,7 +41,7 @@ class PlaylistHome extends Component {
     // }
 
     displaySearchResults() {
-        return this.state.showResults ? <SearchResults /> : <View></View>;
+        return (this.context.showSearchResults ? <SearchResults style={styles.searchResults} /> : <View></View>);
     }
 
     displayPlaylist() {
@@ -78,4 +77,8 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         color: '#000',
     },
+    searchResults: {
+        height: 400,
+        backgroundColor: 'red',
+    }
 });
