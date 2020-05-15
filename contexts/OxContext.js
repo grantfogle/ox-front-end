@@ -116,6 +116,7 @@ class OxContextProvider extends Component {
             })
         if (this.state.searchedSongs.length > 0) {
             this.setState({ searchedSongs: true });
+            return true;
         }
     }
     // add items to to playlist

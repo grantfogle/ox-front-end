@@ -1,24 +1,33 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
-
-// displaySongsReturned() {
-//     for (let i = 0; i < 4; i++) {
-//     }
-// }
-
+import { ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { OxContext } from '../../../contexts/OxContext';
 
 const SearchResults = () => {
     const { searchResults, songRow, songName, songText } = styles;
     // Allow add, un add, star unstar allow un do of moves
     return (
-        <View style={searchResults}>
-            <View style={songRow}>
-                <Text style={songName}>I want it that way</Text>
-                <Text style={songText}>Brittany Spears</Text>
-                <Text style={songText}>Star</Text>
-                <Text style={songText}>Add</Text>
-            </View>
-        </View>
+        <OxContext.Consumer>{({ searchedSongs }) => {
+            function displaySearchedSongs() {
+                const songArr = Object.keys(searchedSongs["artists"]);
+                console.log(songArr);
+                return songArr.map(song => {
+                    return (
+                        <View style={songRow}>
+                            <Text style={songName}>Song Name</Text>
+                            <Text style={songText}>Song Artist</Text>
+                            <Text style={songText}>Favorite</Text>
+                            <Text style={songText}>Remove</Text>
+                        </View>
+                    )
+                })
+            }
+            return (
+                <ScrollView>
+                    {displaySearchedSongs()}
+                </ScrollView>
+            );
+        }}
+        </OxContext.Consumer>
     )
 }
 
@@ -29,6 +38,10 @@ const styles = {
         width: '100%',
         height: 200,
         backgroundColor: 'black',
+    },
+    searchResults: {
+        minHeight: '100%',
+        width: '100%',
     },
     songRow: {
         backgroundColor: '#fff',

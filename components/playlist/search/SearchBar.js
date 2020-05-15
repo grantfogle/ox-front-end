@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { OxContext } from '../../../contexts/OxContext';
 
 class SearchBar extends Component {
@@ -13,7 +14,6 @@ class SearchBar extends Component {
 
     formUpdate(text) {
         this.setState({ query: text })
-        console.log(this.state.query);
     }
     render() {
         const { searchBox, searchInput, searchButton, searchButtonText } = styles;
@@ -24,7 +24,10 @@ class SearchBar extends Component {
                     style={searchInput}
                     onChangeText={(text) => this.formUpdate(text)}
                 />
-                <TouchableOpacity style={searchButton} onPress={() => searchSongs(this.state.query)}>
+                <TouchableOpacity style={searchButton} onPress={() => {
+                    searchSongs(this.state.query);
+                    Actions.searchResults();
+                }}>
                     <Text style={searchButtonText}>Search</Text>
                 </TouchableOpacity>
             </View>

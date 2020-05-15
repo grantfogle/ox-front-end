@@ -40,10 +40,6 @@ class PlaylistHome extends Component {
     //         })
     // }
 
-    displaySearchResults() {
-        return (this.context.showSearchResults ? <SearchResults style={styles.searchResults} /> : <View></View>);
-    }
-
     displayPlaylist() {
         return this.context.currentPlaylist.map(song => <Song key={song.id} name={song.name} artist={song.artist} />);
     }
@@ -53,7 +49,6 @@ class PlaylistHome extends Component {
         return (
             <View style={container}>
                 <SearchBar />
-                {this.displaySearchResults()}
                 {this.displayPlaylist()}
                 {/* {this.getSpotifyResults()} */}
             </View>

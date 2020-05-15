@@ -6,6 +6,7 @@ import Start from './components/start/Start';
 import CreatePlaylist from './components/playlist/CreatePlaylist';
 import FindPlaylist from './components/playlist/FindPlaylist';
 import PlaylistHome from './components/playlist/PlaylistHome';
+import SearchResults from './components/playlist/search/SearchResults';
 
 const RouterComponent = () => {
     return (
@@ -16,6 +17,7 @@ const RouterComponent = () => {
                 <Scene key="createPlaylist" component={CreatePlaylist} title="Create Playlist" />
                 <Scene key="findPlaylist" component={FindPlaylist} title="Find a Playlist" />
                 <Scene key="playlistHome" component={PlaylistHome} title="Playlist" />
+                <Scene key="searchResults" component={SearchResults} title="Search Results" />
             </Stack>
         </Router>
     )
