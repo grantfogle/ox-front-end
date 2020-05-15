@@ -109,7 +109,7 @@ class OxContextProvider extends Component {
     }
     // find a song
     async searchSongs(query) {
-        this.spotifyApi.search(query, ['artist', 'track'])
+        this.spotifyApi.search(query, ['track'])
             .then(response => {
                 console.log('data', response);
                 this.setState({ searchedSongs: response })
