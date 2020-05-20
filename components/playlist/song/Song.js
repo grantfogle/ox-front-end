@@ -2,12 +2,14 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 const Song = ({ name, artist }) => {
-    const { songRow, songName, songText, songArt, vetoSong, vetoText } = styles;
+    const { songRow, songInfo, songName, songText, songArt, vetoSong, vetoText } = styles;
     // Allow add, un add, star unstar allow un do of moves
     return (
         <View style={songRow}>
-            <Text style={songName}>{name}</Text>
-            <Text style={songText}>{artist}</Text>
+            <View style={songInfo}>
+                <Text style={songName}>{name}</Text>
+                <Text style={songText}>{artist}</Text>
+            </View>
             <TouchableOpacity style={vetoSong}>
                 <Text style={vetoText}>VETO</Text>
             </TouchableOpacity>
@@ -20,7 +22,7 @@ export default Song;
 const styles = {
     songRow: {
         width: '100%',
-        height: 40,
+        height: 60,
         backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
@@ -28,6 +30,10 @@ const styles = {
         paddingLeft: 5,
         paddingRight: 5,
         marginTop: 2,
+    },
+    songInfo: {
+        height: '100%',
+        justifyContent: 'center',
     },
     songArt: {
         height: 40,
@@ -38,12 +44,12 @@ const styles = {
         color: '#000',
     },
     songText: {
-        fontSize: 16,
+        fontSize: 14,
     },
     vetoSong: {
         height: 36,
         width: 60,
-        backgroundColor: '#c0392b',
+        backgroundColor: '#e74c3c',
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
