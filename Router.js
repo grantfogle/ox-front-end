@@ -12,7 +12,7 @@ const RouterComponent = () => {
     return (
         <Router>
             <Stack key="root">
-                <Scene key="login" component={Login} title="Login/Signup" initial />
+                <Scene key="login" hideNavBar={true} component={Login} title="Login/Signup" initial />
                 <Scene key="start" component={Start} title="Start/Find a Playlist" />
                 <Scene key="createPlaylist" component={CreatePlaylist} title="Create Playlist" />
                 <Scene key="findPlaylist" component={FindPlaylist} title="Find a Playlist" />
