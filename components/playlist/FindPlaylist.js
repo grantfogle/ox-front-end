@@ -21,7 +21,7 @@ class FindPlaylist extends Component {
                 <View style={formButton}>
                     <TextInput style={formText} placeholder="Playlist Password" />
                 </View>
-                <TouchableOpacity onPress={() => Actions.playlistHome()}>
+                <TouchableOpacity style={formButton} onPress={() => Actions.playlistHome()}>
                     <Text style={formText}>Join  ----></Text>
                 </TouchableOpacity>
             </View>

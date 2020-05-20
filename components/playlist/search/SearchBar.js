@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     searchBox: {
         width: '100%',
         height: 60,
-        backgroundColor: '#2c3e50',
+        backgroundColor: '#9b59b6',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
