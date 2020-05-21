@@ -17,6 +17,7 @@ class OxContextProvider extends Component {
         expirationTime: '',
         playlist: [],
         playlistSongs: [],
+        playlistId: '',
         songs: [],
         currentPlaylist: [
             { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
@@ -38,7 +39,7 @@ class OxContextProvider extends Component {
             'user-read-currently-playing',
             'app-remote-control',
             'playlist-modify-public',
-        ]
+        ];
         const scopes = scopesArr.join(' ');
         const redirectUrl = AuthSession.getRedirectUrl();
         const result = await AuthSession.startAsync({
@@ -49,15 +50,14 @@ class OxContextProvider extends Component {
                 clientId +
                 '&scope=' + encodeURIComponent(scopes) +
                 '&redirect_uri=' + encodeURIComponent(redirectUrl)
-        })
+        });
         this.setState({ authorizationCode: result.params.code });
         return result.params.code;
     };
-    // get auth token
+
     async getAccessToken(authorizationCode) {
         const redirectUri = AuthSession.getRedirectUrl();
         const credentialsToBase64 = base64.encode(`${clientId}:${clientSecret}`);
-        // const credentialsToBase64 = 'NzYzYWNlZTk2M2IyNGI4NGE0YTM1ZDRhYjU4NzRiOTk6YTZiZjA5ZDAwNGJiNDBkMzg1MDc5YTM1ODU2ZGRlY2I='
         await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
@@ -83,7 +83,7 @@ class OxContextProvider extends Component {
         // await setUserData('refreshToken', refreshToken);
         // await setUserData('expirationTime', expirationTime);
     };
-    // Get spotify user
+    // Reruns auth if it expired
     // async getValidSPObj() {
     //     const accessToken = await getUserData('accessToken');
     //     var sp = new SpotifyWebAPI();
@@ -92,40 +92,49 @@ class OxContextProvider extends Component {
     // }
     async getUserInfo() {
         const userInfo = await this.spotifyApi.getMe();
-        this.setState({ spotifyUserId: userInfo.uri })
-        console.log(userInfo);
+        this.setState({ spotifyUserId: userInfo.uri });
     }
-    // create playlist
+
     async createPlaylist() {
         this.spotifyApi.createPlaylist(this.state.spotifyUserId, { name: 'party playlist', public: true, collaborative: true });
     }
-    // find a playlist
-    async findAPlaylist() {
 
+    async findAPlaylist() {
+        this.spotifyApi.getPlaylist(this.state.playlistId);
     }
-    // get playlist tracks
+
     async getPlaylistTracks(playlistId) {
         this.spotifyApi.getPlaylist(playlistId);
     }
-    // find a song
+
+    async addTracksToPlaylist(song) {
+        this.spotifyApi.addTracksToPlaylist(this.state.playlistId, [...song]);
+        this.getPlaylistTracks();
+    }
+
     async searchSongs(query) {
         this.spotifyApi.search(query, ['track'])
             .then(response => {
-                console.log('data', response);
                 this.setState({ searchedSongs: response })
             })
         if (this.state.searchedSongs.length > 0) {
             this.setState({ searchedSongs: true });
             return true;
         }
+        // how to format songs bro??
     }
-    // add items to to playlist
-    async addTracksToPlaylist(song) {
-        this.spotifyApi.addTracksToPlaylist(this.state.playlistId, [...song]);
+
+    async removeSongsFromPlaylist(song) {
+        this.spotifyApi.removeTracksFromPlaylist(this.state.playlistId);
         this.getPlaylistTracks();
     }
-    // remove items from a playlist
-    // get playback info (what's played, current tracks, skip, repeat, pause)
+
+    /*
+    FUTURE IMPLEMENTATION 
+    - get playback info (what's played, current tracks, skip, repeat, pause)
+    - allow for control of song
+    - allow users to control what songs people add
+    */
 
     render() {
         return (
