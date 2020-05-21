@@ -13,17 +13,14 @@ class SpotifyLogin extends Component {
         }
     }
 
-    showText() {
-        console.log(AuthSession.getRedirectUrl());
-    }
 
     render() {
 
         const { background, formRow, formFill, loginHeader, loginHeaderText,
             loginToggle, loginButtonText } = styles;
+
         return (
             <View style={background}>
-                {this.showText()}
                 <View style={loginHeader}>
                     <Text style={loginHeaderText}>Welcome to Ox</Text>
                 </View>
