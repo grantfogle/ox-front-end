@@ -18,28 +18,6 @@ class PlaylistHome extends Component {
         }
     }
 
-    // songArr = [
-    //     { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
-    //     { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
-    //     { id: 3, name: 'Apparently', artist: 'J. Cole' },
-    //     { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
-    //     { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
-    // ]
-    // async getSpotifyResults(userSearch) {
-    //     const query = 'https://api.spotify.com/v1/search/q=' + fkj.replace(' ', '+');
-    //     fetch(query, {
-    //         method: 'GET',
-    //         headers: {
-    //             Authorization: clientId
-    //         },
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log(data)
-    //             this.searchSongs = data;
-    //         })
-    // }
-
     displayPlaylist() {
         return this.context.currentPlaylist.map(song => <Song key={song.id} name={song.name} artist={song.artist} />);
     }
@@ -62,7 +40,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        // justifyContent: 'center',
         backgroundColor: '#9b59b6',
     },
     headerText: {

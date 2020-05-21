@@ -29,7 +29,7 @@ class OxContextProvider extends Component {
         ],
         searchedSongs: {},
         showSearchResults: true,
-    }
+    };
 
     spotifyApi = new SpotifyWebAPI();
 
