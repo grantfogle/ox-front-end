@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import * as AuthSession from 'expo-auth-session';
 
 
 class SpotifyLogin extends Component {

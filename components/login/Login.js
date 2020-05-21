@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import * as AuthSession from 'expo-auth-session';
 
 
 class Login extends Component {
@@ -13,17 +12,12 @@ class Login extends Component {
         }
     }
 
-    showText() {
-        console.log(AuthSession.getRedirectUrl());
-    }
-
     render() {
 
         const { background, formRow, formFill, loginHeader, loginHeaderText,
             loginToggle, loginButtonText } = styles;
         return (
             <View style={background}>
-                {this.showText()}
                 <View style={loginHeader}>
                     <Text style={loginHeaderText}>Welcome to Ox</Text>
                 </View>
