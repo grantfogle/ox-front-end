@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { OxContext } from '../../contexts/OxContext';
 
 class FindPlaylist extends Component {
+    static contextType = OxContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -59,7 +61,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         flexDirection: 'row',
         alignItems: 'center',
-        // backgroundColor: '#9b59b6',
     },
     formText: {
         fontSize: 25,

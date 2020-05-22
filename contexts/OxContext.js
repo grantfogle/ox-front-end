@@ -95,8 +95,9 @@ class OxContextProvider extends Component {
         this.setState({ spotifyUserId: userInfo.uri });
     }
 
-    async createPlaylist() {
-        this.spotifyApi.createPlaylist(this.state.spotifyUserId, { name: 'party playlist', public: true, collaborative: true });
+    async createPlaylist(playlistName) {
+        const createdPlaylist = this.spotifyApi.createPlaylist(this.state.spotifyUserId, { name: playlistName, public: true, collaborative: true })
+        console.log(createdPlaylist);
     }
 
     async findAPlaylist() {
@@ -143,6 +144,7 @@ class OxContextProvider extends Component {
                 getAuthorizationCode: this.getAuthorizationCode.bind(this),
                 getUserInfo: this.getUserInfo.bind(this),
                 searchSongs: this.searchSongs.bind(this),
+                createPlaylist: this.createPlaylist.bind(this)
             }}>
                 {this.props.children}
             </OxContext.Provider>

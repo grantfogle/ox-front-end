@@ -1,24 +1,45 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { OxContext } from '../../contexts/OxContext';
 
 class CreatePlaylist extends Component {
+    static contextType = OxContext;
     constructor(props) {
         super(props);
         this.state = {
             playlistName: '',
-            allowRadio: '',
-            allowVeto: '',
-            allowRepost: '',
+            allowRadio: false,
+            allowVeto: false,
+            allowRepost: false,
         }
     }
+
+    formUpdate(text) {
+        this.setState({ playlistName: text });
+        console.log(this.state.playlistName);
+    }
+
+    async submitNewPlaylist() {
+        if (this.state.playlistName.length > 0) {
+            const playlistStatus = await this.context.CreatePlaylist(this.state.playlistName);
+            console.log('playlistStatus', playlistStatus);
+            // check to make sure playlist was created and we have a new playlist ready to view
+            Actions.PlaylistHome();
+        } else {
+            console.log('There was an error');
+            // fire error message
+        }
+    }
+
     render() {
         const { container, headerText, formText, formButton, formButtonSelected, formCircle } = styles;
         return (
             <View style={container}>
                 <Text style={headerText}>Create Your Playlist</Text>
                 <View style={formButton}>
-                    <TextInput style={formText} placeholder="Playlist Name" />
+                    <TextInput style={formText} placeholder="Playlist Name"
+                        onChangeText={(text) => this.formUpdate(text)} />
                 </View>
                 <TouchableOpacity style={formButton}>
                     <View style={formCircle} />
