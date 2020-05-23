@@ -17,15 +17,17 @@ class CreatePlaylist extends Component {
 
     formUpdate(text) {
         this.setState({ playlistName: text });
-        console.log(this.state.playlistName);
     }
 
     async submitNewPlaylist() {
         if (this.state.playlistName.length > 0) {
-            const playlistStatus = await this.context.CreatePlaylist(this.state.playlistName);
+            const playlistStatus = await this.context.createPlaylist(this.state.playlistName);
+            if (playlistStatus) {
+                Actions.playlistHome();
+            }
+            console.log('create playlist ran in createPlaylist component');
             console.log('playlistStatus', playlistStatus);
             // check to make sure playlist was created and we have a new playlist ready to view
-            Actions.PlaylistHome();
         } else {
             console.log('There was an error');
             // fire error message
@@ -53,7 +55,7 @@ class CreatePlaylist extends Component {
                     <View style={formCircle} />
                     <Text style={formText}>Allow Replays</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Actions.playlistHome()}>
+                <TouchableOpacity onPress={() => this.submitNewPlaylist()}>
                     <Text style={formText}>Get Started ----></Text>
                 </TouchableOpacity>
             </View>

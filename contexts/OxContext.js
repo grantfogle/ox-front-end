@@ -10,7 +10,7 @@ class OxContextProvider extends Component {
     state = {
         username: '',
         spotifyUsername: '',
-        spotifyUserId: '',
+        spotifyUserId: '125956319',
         authorizationCode: '',
         spotifyToken: '',
         refreshToken: '',
@@ -39,6 +39,7 @@ class OxContextProvider extends Component {
             'user-read-currently-playing',
             'app-remote-control',
             'playlist-modify-public',
+            'playlist-modify-private'
         ];
         const scopes = scopesArr.join(' ');
         const redirectUrl = AuthSession.getRedirectUrl();
@@ -92,12 +93,31 @@ class OxContextProvider extends Component {
     // }
     async getUserInfo() {
         const userInfo = await this.spotifyApi.getMe();
-        this.setState({ spotifyUserId: userInfo.uri });
+        this.setState({ spotifyUserId: userInfo.id });
     }
 
     async createPlaylist(playlistName) {
-        const createdPlaylist = this.spotifyApi.createPlaylist(this.state.spotifyUserId, { name: playlistName, public: true, collaborative: true })
-        console.log(createdPlaylist);
+        let playlistCreated = false;
+        const body = {
+            name: playlistName,
+            public: false,
+            collaborative: true
+        }
+        // { name: playlistName, public: true, collaborative: true }
+        // this.spotifyApi.createPlaylist(this.state.spotifyUserId)
+        const createdPlaylist = await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body);
+        console.log('createdPlaylist bruv', createdPlaylist);
+        if (createdPlaylist.collaborative === true) {
+            playlistCreated = true;
+            // fetch playlist or set 
+        }
+        return playlistCreated;
+        // await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body)
+        // .then(response => {
+        //     console.log('response brother', response.json());
+        //     playlistCreated = true;
+        // })
+        // console.log(createdPlaylist);
     }
 
     async findAPlaylist() {
