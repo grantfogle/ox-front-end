@@ -11,11 +11,10 @@ const SearchResults = () => {
                 console.log('searchResults component', searchedSongs);
                 return searchedSongs.map(song => {
                     return (
-                        <View style={songRow}>
+                        <View style={songRow} key={song.id}>
                             <Text style={songName}>{song.name}</Text>
-                            <Text style={songText}>Song Artist</Text>
-                            <Text style={songText}>Favorite</Text>
-                            <Text style={songText}>Remove</Text>
+                            <Text style={songText}>{song.artist.map(name => name)}</Text>
+                            <Text style={songText}>Add</Text>
                         </View>
                     )
                 })
