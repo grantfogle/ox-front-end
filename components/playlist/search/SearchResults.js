@@ -8,12 +8,11 @@ const SearchResults = () => {
     return (
         <OxContext.Consumer>{({ searchedSongs }) => {
             function displaySearchedSongs() {
-                const songArr = Object.keys(searchedSongs);
-                console.log('array of songs', songArr);
-                return songArr.map(song => {
+                console.log('searchResults component', searchedSongs);
+                return searchedSongs.map(song => {
                     return (
                         <View style={songRow}>
-                            <Text style={songName}>{song}</Text>
+                            <Text style={songName}>{song.name}</Text>
                             <Text style={songText}>Song Artist</Text>
                             <Text style={songText}>Favorite</Text>
                             <Text style={songText}>Remove</Text>

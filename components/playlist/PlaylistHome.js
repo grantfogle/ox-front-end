@@ -14,7 +14,7 @@ class PlaylistHome extends Component {
         this.state = {
             playlist: [],
             searchSongs: [],
-            userSearch: 'FKJ'
+            userSearch: ''
         }
     }
 

@@ -27,7 +27,7 @@ class OxContextProvider extends Component {
             { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
             { id: 6, name: '22', artist: 'Taylor Swift' }
         ],
-        searchedSongs: {},
+        searchedSongs: [],
         showSearchResults: true,
     };
 
@@ -136,13 +136,26 @@ class OxContextProvider extends Component {
     async searchSongs(query) {
         this.spotifyApi.search(query, ['track'])
             .then(response => {
-                this.setState({ searchedSongs: response })
+                // this.setState({ searchedSongs: response.tracks.items })
+                console.log('CATAZZZZZ', response.tracks.items);
+                const mappedSongResponse = response.tracks.items.map(song => {
+                    console.log("SONG NAME", song.name)
+                    let name = song.name;
+                    let artist = song.artists.map(artist => artist.name);
+                    let album = song.album.artists.map(album => album.name);
+                    let id = song.id;
+                    // this.state.searchedSongs.push([{ name: name, artist, album, id }])
+                    return { name, artist, album, id };
+                })
+                // set state this.state.searchedSongs
+                console.log('mappedSongResponse', mappedSongResponse)
+                this.state.searchedSongs.setState({ searchedSongs: mappedSongResponse });
             })
-        if (this.state.searchedSongs.length > 0) {
-            this.setState({ searchedSongs: true });
-            return true;
-        }
+        // if (this.state.searchedSongs.length > 0) {
+        //     this.setState({ searchedSongs: true });
+        // }
         // how to format songs bro??
+        return true;
     }
 
     async removeSongsFromPlaylist(song) {

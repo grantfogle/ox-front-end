@@ -15,6 +15,13 @@ class SearchBar extends Component {
     formUpdate(text) {
         this.setState({ query: text })
     }
+    async searchForTrack() {
+        const searchStatus = await this.context.searchSongs(this.state.query);
+
+        if (searchStatus) {
+            Actions.searchResults();
+        }
+    }
     render() {
         const { searchBox, searchInput, searchButton, searchButtonText } = styles;
         const { searchSongs } = this.context;
@@ -24,10 +31,7 @@ class SearchBar extends Component {
                     style={searchInput}
                     onChangeText={(text) => this.formUpdate(text)}
                 />
-                <TouchableOpacity style={searchButton} onPress={() => {
-                    searchSongs(this.state.query);
-                    Actions.searchResults();
-                }}>
+                <TouchableOpacity style={searchButton} onPress={() => this.searchForTrack()}>
                     <Text style={searchButtonText}>Search</Text>
                 </TouchableOpacity>
             </View>

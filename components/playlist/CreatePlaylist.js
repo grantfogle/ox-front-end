@@ -30,7 +30,6 @@ class CreatePlaylist extends Component {
             // check to make sure playlist was created and we have a new playlist ready to view
         } else {
             console.log('There was an error');
-            // fire error message
         }
     }
 
