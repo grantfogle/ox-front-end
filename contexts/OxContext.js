@@ -106,11 +106,12 @@ class OxContextProvider extends Component {
         // { name: playlistName, public: true, collaborative: true }
         // this.spotifyApi.createPlaylist(this.state.spotifyUserId)
         const createdPlaylist = await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body);
-        console.log('createdPlaylist bruv', createdPlaylist);
-        if (createdPlaylist.collaborative === true) {
+        this.setState({ playlistId: createdPlaylist.id });
+        if (createdPlaylist.collaborative) {
             playlistCreated = true;
             // fetch playlist or set 
         }
+        this.getPlaylistTracks
         return playlistCreated;
         // await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body)
         // .then(response => {
@@ -125,12 +126,15 @@ class OxContextProvider extends Component {
     }
 
     async getPlaylistTracks(playlistId) {
-        this.spotifyApi.getPlaylist(playlistId);
+        const currentPlaylist = this.spotifyApi.getPlaylist(playlistId);
+        this.setState({ currentPlaylist: currentPlaylist });
     }
 
-    async addTracksToPlaylist(song) {
-        this.spotifyApi.addTracksToPlaylist(this.state.playlistId, [...song]);
-        this.getPlaylistTracks();
+    async addSongToPlaylist(songUri) {
+        console.log('cats and dogs');
+        console.log('playlist id', this.state.playlistId);
+        this.spotifyApi.addTracksToPlaylist(this.state.playlistId, [songUri]);
+        // this.getPlaylistTracks();
     }
 
     async searchSongs(query) {
@@ -141,16 +145,11 @@ class OxContextProvider extends Component {
                     let artist = song.artists.map(artist => artist.name);
                     let album = song.album.artists.map(album => album.name);
                     let id = song.id;
-                    return { name, artist, album, id };
+                    let uri = song.uri;
+                    return { name, artist, album, id, uri };
                 })
-                // set state this.state.searchedSongs
-                console.log('mappedSongResponse', mappedSongResponse)
                 this.setState({ searchedSongs: mappedSongResponse });
             })
-        // if (this.state.searchedSongs.length > 0) {
-        //     this.setState({ searchedSongs: true });
-        // }
-        // how to format songs bro??
         return true;
     }
 
@@ -173,7 +172,8 @@ class OxContextProvider extends Component {
                 getAuthorizationCode: this.getAuthorizationCode.bind(this),
                 getUserInfo: this.getUserInfo.bind(this),
                 searchSongs: this.searchSongs.bind(this),
-                createPlaylist: this.createPlaylist.bind(this)
+                createPlaylist: this.createPlaylist.bind(this),
+                addSongToPlaylist: this.addSongToPlaylist.bind(this),
             }}>
                 {this.props.children}
             </OxContext.Provider>

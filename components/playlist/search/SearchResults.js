@@ -3,10 +3,10 @@ import { ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { OxContext } from '../../../contexts/OxContext';
 
 const SearchResults = () => {
-    const { searchResults, songRow, songName, songText } = styles;
+    const { searchResults, songRow, songName, songText, addSongButton } = styles;
     // Allow add, un add, star unstar allow un do of moves
     return (
-        <OxContext.Consumer>{({ searchedSongs }) => {
+        <OxContext.Consumer>{({ searchedSongs, addSongToPlaylist }) => {
             function displaySearchedSongs() {
                 console.log('searchResults component', searchedSongs);
                 return searchedSongs.map(song => {
@@ -14,7 +14,9 @@ const SearchResults = () => {
                         <View style={songRow} key={song.id}>
                             <Text style={songName}>{song.name}</Text>
                             <Text style={songText}>{song.artist.map(name => name)}</Text>
-                            <Text style={songText}>Add</Text>
+                            <TouchableOpacity style={addSongButton} onPress={() => addSongToPlaylist(song.uri)}>
+                                <Text style={songText}>Add</Text>
+                            </TouchableOpacity>
                         </View>
                     )
                 })
@@ -55,5 +57,15 @@ const styles = {
     },
     songText: {
         fontSize: 16,
+    },
+    addSongButton: {
+        height: 20,
+        width: 60,
+        backgroundColor: '#27ae60',
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+
     }
 };
