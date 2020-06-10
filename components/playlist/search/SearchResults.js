@@ -6,7 +6,7 @@ const SearchResults = () => {
     const { searchResults, songRow, songName, songText, addSongButton } = styles;
     // Allow add, un add, star unstar allow un do of moves
     return (
-        <OxContext.Consumer>{({ searchedSongs, addSongToPlaylist }) => {
+        <OxContext.Consumer>{({ searchedSongs, addSongToPlaylist, getPlaylistTracks }) => {
             function displaySearchedSongs() {
                 console.log('searchResults component', searchedSongs);
                 return searchedSongs.map(song => {
@@ -14,7 +14,10 @@ const SearchResults = () => {
                         <View style={songRow} key={song.id}>
                             <Text style={songName}>{song.name}</Text>
                             <Text style={songText}>{song.artist.map(name => name)}</Text>
-                            <TouchableOpacity style={addSongButton} onPress={() => addSongToPlaylist(song.uri)}>
+                            <TouchableOpacity style={addSongButton} onPress={() => {
+                                addSongToPlaylist(song.uri);
+                                getPlaylistTracks();
+                            }}>
                                 <Text style={songText}>Add</Text>
                             </TouchableOpacity>
                         </View>

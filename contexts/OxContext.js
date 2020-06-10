@@ -111,7 +111,7 @@ class OxContextProvider extends Component {
             playlistCreated = true;
             // fetch playlist or set 
         }
-        this.getPlaylistTracks
+        // this.getPlaylistTracks
         return playlistCreated;
         // await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body)
         // .then(response => {
@@ -125,16 +125,15 @@ class OxContextProvider extends Component {
         this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
-    async getPlaylistTracks(playlistId) {
+    async getPlaylistTracks() {
+        const playlistId = this.state.playlistId;
+        console.log('THIS IS THE PLAYLIST ID', playlistId);
         const currentPlaylist = this.spotifyApi.getPlaylist(playlistId);
         this.setState({ currentPlaylist: currentPlaylist });
     }
 
     async addSongToPlaylist(songUri) {
-        console.log('cats and dogs');
-        console.log('playlist id', this.state.playlistId);
         this.spotifyApi.addTracksToPlaylist(this.state.playlistId, [songUri]);
-        // this.getPlaylistTracks();
     }
 
     async searchSongs(query) {
@@ -174,6 +173,7 @@ class OxContextProvider extends Component {
                 searchSongs: this.searchSongs.bind(this),
                 createPlaylist: this.createPlaylist.bind(this),
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
+                getPlaylistTracks: this.getPlaylistTracks.bind(this),
             }}>
                 {this.props.children}
             </OxContext.Provider>
