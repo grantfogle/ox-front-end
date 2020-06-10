@@ -122,6 +122,7 @@ class OxContextProvider extends Component {
     }
 
     async findAPlaylist() {
+        console.log('it ran find a playlist', this.state.playlistId);
         this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
@@ -174,6 +175,7 @@ class OxContextProvider extends Component {
                 createPlaylist: this.createPlaylist.bind(this),
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
+                findAPlaylist: this.findAPlaylist.bind(this),
             }}>
                 {this.props.children}
             </OxContext.Provider>
