@@ -20,12 +20,12 @@ class OxContextProvider extends Component {
         playlistId: '',
         songs: [],
         currentPlaylist: [
-            { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
-            { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
-            { id: 3, name: 'Apparently', artist: 'J. Cole' },
-            { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
-            { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
-            { id: 6, name: '22', artist: 'Taylor Swift' }
+            // { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
+            // { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
+            // { id: 3, name: 'Apparently', artist: 'J. Cole' },
+            // { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
+            // { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
+            // { id: 6, name: '22', artist: 'Taylor Swift' }
         ],
         searchedSongs: [],
         showSearchResults: true,
@@ -111,26 +111,21 @@ class OxContextProvider extends Component {
             playlistCreated = true;
             // fetch playlist or set 
         }
-        // this.getPlaylistTracks
         return playlistCreated;
-        // await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body)
-        // .then(response => {
-        //     console.log('response brother', response.json());
-        //     playlistCreated = true;
-        // })
-        // console.log(createdPlaylist);
     }
 
     async findAPlaylist() {
-        console.log('it ran find a playlist', this.state.playlistId);
+        // console.log('it ran find a playlist', this.state.playlistId);
         this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
     async getPlaylistTracks() {
         const playlistId = this.state.playlistId;
         console.log('THIS IS THE PLAYLIST ID', playlistId);
-        const currentPlaylist = this.spotifyApi.getPlaylist(playlistId);
-        this.setState({ currentPlaylist: currentPlaylist });
+        this.spotifyApi.getPlaylistTracks(playlistId)
+            .then(response => console.log('response json', response.items));
+        // this.setState({ currentPlaylist: currentPlaylist });
+        // console.log('this is the current playlist', this.state.currentPlaylist);
     }
 
     async addSongToPlaylist(songUri) {
@@ -155,7 +150,6 @@ class OxContextProvider extends Component {
 
     async removeSongsFromPlaylist(song) {
         this.spotifyApi.removeTracksFromPlaylist(this.state.playlistId);
-        this.getPlaylistTracks();
     }
 
     /*

@@ -8,15 +8,14 @@ const SearchResults = () => {
     return (
         <OxContext.Consumer>{({ searchedSongs, addSongToPlaylist, getPlaylistTracks }) => {
             function displaySearchedSongs() {
-                console.log('searchResults component', searchedSongs);
                 return searchedSongs.map(song => {
                     return (
                         <View style={songRow} key={song.id}>
                             <Text style={songName}>{song.name}</Text>
                             <Text style={songText}>{song.artist.map(name => name)}</Text>
-                            <TouchableOpacity style={addSongButton} onPress={() => {
-                                addSongToPlaylist(song.uri);
-                                getPlaylistTracks();
+                            <TouchableOpacity style={addSongButton} onPress={async () => {
+                                await addSongToPlaylist(song.uri);
+                                await getPlaylistTracks();
                             }}>
                                 <Text style={songText}>Add</Text>
                             </TouchableOpacity>
