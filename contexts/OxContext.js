@@ -17,15 +17,15 @@ class OxContextProvider extends Component {
         expirationTime: '',
         playlist: [],
         playlistSongs: [],
-        playlistId: '03HFTK5NECLsjEGIfCdKgE',
+        playlistId: '4kcjIFRliZWc7bGe597Dmj',
         songs: [],
         currentPlaylist: [
-            // { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
-            // { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra' },
-            // { id: 3, name: 'Apparently', artist: 'J. Cole' },
-            // { id: 4, name: 'Underwater', artist: 'Rufus Du Sol' },
-            // { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi' },
-            // { id: 6, name: '22', artist: 'Taylor Swift' }
+            { id: 1, name: 'Flashing Lights', artist: 'Kanye West', art: '' },
+            { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra', art: '' },
+            { id: 3, name: 'Apparently', artist: 'J. Cole', art: '' },
+            { id: 4, name: 'Underwater', artist: 'Rufus Du Sol', art: '' },
+            { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi', art: '' },
+            { id: 6, name: '22', artist: 'Taylor Swift', art: '' }
         ],
         searchedSongs: [],
         showSearchResults: true,
@@ -39,7 +39,9 @@ class OxContextProvider extends Component {
             'user-read-currently-playing',
             'app-remote-control',
             'playlist-modify-public',
-            'playlist-modify-private'
+            'playlist-modify-private',
+            'playlist-read-collaborative',
+            'playlist-modify-public',
         ];
         const scopes = scopesArr.join(' ');
         const redirectUrl = AuthSession.getRedirectUrl();
@@ -123,16 +125,24 @@ class OxContextProvider extends Component {
         const playlist = [];
         console.log('THIS IS THE PLAYLIST ID', playlistId);
         // this.spotifyApi.getPlaylist
-        this.spotifyApi.getPlaylistTracks(playlistId, fields = items(track(name, href, album(name, href))))
+        //this.spotifyApi.getPlaylistTracks(playlistId, track(name, href, album(name, href)))
+        await this.spotifyApi.getPlaylistTracks(playlistId)
             .then(response => {
                 console.log('response json', response.items)
-                response.map(song => {
-                    const track = song.track;
-                    console.log(track);
-                })
+                response.items.map(song => {
+                    let name = song.track.name;
+                    let artists = song.track.artists.map(artist => artist.name);
+                    let album = song.track.album.name;
+                    let id = song.track.id;
+                    let uri = song.track.uri;
+                    let art = song.track.album.images[2].url;
+                    playlist.push({ id, uri, name, artists, album, art });
+                    console.log('it workeddddd', { id, uri, name, artists, album, art });
+                    // playlist.push({ id, uri, name, artist, album });
+                });
             });
-        // this.setState({ currentPlaylist: currentPlaylist });
-        // console.log('this is the current playlist', this.state.currentPlaylist);
+        console.log('THIS IS THE TRUNCATED PLAYLIST', playlist);
+        this.setState({ currentPlaylist: playlist });
     }
 
     async addSongToPlaylist(songUri) {
@@ -177,6 +187,7 @@ class OxContextProvider extends Component {
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findAPlaylist: this.findAPlaylist.bind(this),
+                getPlaylistTracks: this.getPlaylistTracks.bind(this)
             }}>
                 {this.props.children}
             </OxContext.Provider>

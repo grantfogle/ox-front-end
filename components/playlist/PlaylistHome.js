@@ -18,7 +18,10 @@ class PlaylistHome extends Component {
     displayPlaylist() {
         // console.log('THIS IS THE CURRENT PLAYLIST', this.context.currentPlaylist);
         // const currentPlaylist = this.context.getPlaylistTracks();
-        return this.context.currentPlaylist.map(song => <Song key={song.id} name={song.name} artist={song.artist} />);
+        // this.context.getPlaylistTracks();
+        return this.context.currentPlaylist.map(song => {
+            return <Song key={song.id} song={song} />
+        });
     }
 
     render() {

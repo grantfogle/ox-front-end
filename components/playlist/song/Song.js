@@ -1,14 +1,22 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
-const Song = ({ name, artist }) => {
-    const { songRow, songInfo, songName, songText, songArt, vetoSong, vetoText } = styles;
+const Song = ({ song }) => {
+    const { songRow, songInfo, songName, songArtist, vetoSong, vetoText, songDetails } = styles;
+    const showArtists = () => {
+        const artistString = '';
+        return artistString;
+
+    }
     // Allow add, un add, star unstar allow un do of moves
     return (
         <View style={songRow}>
-            <View style={songInfo}>
-                <Text style={songName}>{name}</Text>
-                <Text style={songText}>{artist}</Text>
+            <View style={songDetails}>
+                <Image source={{ uri: song.art }} style={{ width: 54, height: 54 }} />
+                <View style={songInfo}>
+                    <Text style={songName}>{song.name}</Text>
+                    <Text style={songArtist}>{song.artists[0]}</Text>
+                </View>
             </View>
             <TouchableOpacity style={vetoSong}>
                 <Text style={vetoText}>VETO</Text>
@@ -23,7 +31,6 @@ const styles = {
     songRow: {
         width: '100%',
         height: 60,
-        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -31,20 +38,23 @@ const styles = {
         paddingRight: 5,
         marginTop: 2,
     },
+    songDetails: {
+        height: '100%',
+        width: '60%',
+        flexDirection: 'row',
+    },
     songInfo: {
         height: '100%',
-        justifyContent: 'center',
-    },
-    songArt: {
-        height: 40,
-        width: 40,
+        flexDirection: 'column',
+        marginLeft: 10,
     },
     songName: {
         fontSize: 20,
-        color: '#000',
+        color: '#fff'
     },
-    songText: {
+    songArtist: {
         fontSize: 14,
+        color: '#fff',
     },
     vetoSong: {
         height: 36,
