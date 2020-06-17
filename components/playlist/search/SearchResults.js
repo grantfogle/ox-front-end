@@ -9,6 +9,7 @@ const SearchResults = () => {
         <OxContext.Consumer>{({ searchedSongs, addSongToPlaylist, getPlaylistTracks }) => {
             function displaySearchedSongs() {
                 return searchedSongs.map(song => {
+                    // REUSE SONG COMPONENT DUDEEEEE
                     return (
                         <View style={songRow} key={song.id}>
                             <Text style={songName}>{song.name}</Text>
@@ -39,14 +40,13 @@ const styles = {
     container: {
         width: '100%',
         height: 200,
-        backgroundColor: 'black',
+        backgroundColor: '#9b59b6',
     },
     searchResults: {
         minHeight: '100%',
         width: '100%',
     },
     songRow: {
-        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
