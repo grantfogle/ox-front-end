@@ -17,7 +17,7 @@ class OxContextProvider extends Component {
         expirationTime: '',
         playlist: [],
         playlistSongs: [],
-        playlistId: '',
+        playlistId: '03HFTK5NECLsjEGIfCdKgE',
         songs: [],
         currentPlaylist: [
             // { id: 1, name: 'Flashing Lights', artist: 'Kanye West' },
@@ -115,15 +115,22 @@ class OxContextProvider extends Component {
     }
 
     async findAPlaylist() {
-        // console.log('it ran find a playlist', this.state.playlistId);
         this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
     async getPlaylistTracks() {
         const playlistId = this.state.playlistId;
+        const playlist = [];
         console.log('THIS IS THE PLAYLIST ID', playlistId);
-        this.spotifyApi.getPlaylistTracks(playlistId)
-            .then(response => console.log('response json', response.items));
+        // this.spotifyApi.getPlaylist
+        this.spotifyApi.getPlaylistTracks(playlistId, fields = items(track(name, href, album(name, href))))
+            .then(response => {
+                console.log('response json', response.items)
+                response.map(song => {
+                    const track = song.track;
+                    console.log(track);
+                })
+            });
         // this.setState({ currentPlaylist: currentPlaylist });
         // console.log('this is the current playlist', this.state.currentPlaylist);
     }
