@@ -6,6 +6,17 @@ import SpotifyWebAPI from 'spotify-web-api-js';
 
 export const OxContext = createContext();
 
+/*
+    FUTURE IMPLEMENTATIONS
+    - show playback info (what's played, current tracks, skip, repeat, pause)
+    - allow for control of song
+    - allow users to control what songs people add
+    - STYLING IMPROVEMENTS
+    - SESSION HANDLING LIVE
+    - HOW TO FIND PLAYLIST BY PROXIMITY
+    - CLEAN UP CODES BRO
+*/
+
 class OxContextProvider extends Component {
     state = {
         username: '',
@@ -123,12 +134,8 @@ class OxContextProvider extends Component {
     async getPlaylistTracks() {
         const playlistId = this.state.playlistId;
         const playlist = [];
-        console.log('THIS IS THE PLAYLIST ID', playlistId);
-        // this.spotifyApi.getPlaylist
-        //this.spotifyApi.getPlaylistTracks(playlistId, track(name, href, album(name, href)))
         await this.spotifyApi.getPlaylistTracks(playlistId)
             .then(response => {
-                console.log('response json', response.items)
                 response.items.map(song => {
                     let name = song.track.name;
                     let artists = song.track.artists.map(artist => artist.name);
@@ -137,11 +144,8 @@ class OxContextProvider extends Component {
                     let uri = song.track.uri;
                     let art = song.track.album.images[2].url;
                     playlist.push({ id, uri, name, artists, album, art });
-                    console.log('it workeddddd', { id, uri, name, artists, album, art });
-                    // playlist.push({ id, uri, name, artist, album });
                 });
             });
-        console.log('THIS IS THE TRUNCATED PLAYLIST', playlist);
         this.setState({ currentPlaylist: playlist });
     }
 
@@ -168,13 +172,6 @@ class OxContextProvider extends Component {
     async removeSongsFromPlaylist(song) {
         this.spotifyApi.removeTracksFromPlaylist(this.state.playlistId);
     }
-
-    /*
-    FUTURE IMPLEMENTATION 
-    - get playback info (what's played, current tracks, skip, repeat, pause)
-    - allow for control of song
-    - allow users to control what songs people add
-    */
 
     render() {
         return (
