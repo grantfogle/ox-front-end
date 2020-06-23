@@ -31,12 +31,12 @@ class OxContextProvider extends Component {
         playlistId: '4kcjIFRliZWc7bGe597Dmj',
         songs: [],
         currentPlaylist: [
-            { id: 1, name: 'Flashing Lights', artist: 'Kanye West', art: '' },
-            { id: 2, name: 'Fly Me to The Moon', artist: 'Frank Sinatra', art: '' },
-            { id: 3, name: 'Apparently', artist: 'J. Cole', art: '' },
-            { id: 4, name: 'Underwater', artist: 'Rufus Du Sol', art: '' },
-            { id: 5, name: 'Heartache on the Dancefloor', artist: 'Jon Pardi', art: '' },
-            { id: 6, name: '22', artist: 'Taylor Swift', art: '' }
+            { id: 1, name: 'Flashing Lights', artists: ['Kanye West'], art: '' },
+            { id: 2, name: 'Fly Me to The Moon', artists: ['Frank Sinatra'], art: '' },
+            { id: 3, name: 'Apparently', artists: ['J. Cole'], art: '' },
+            { id: 4, name: 'Underwater', artists: ['Rufus Du Sol'], art: '' },
+            { id: 5, name: 'Heartache on the Dancefloor', artists: ['Jon Pardi'], art: '' },
+            { id: 6, name: '22', artists: ['Taylor Swift'], art: '' }
         ],
         searchedSongs: [],
         showSearchResults: true,
@@ -169,6 +169,13 @@ class OxContextProvider extends Component {
         return true;
     }
 
+    async findPlaylistOnDB() {
+        const response = await fetch('https://localhost:8000/', {
+            method: 'GET'
+        });
+        console.log(response);
+    }
+
     async removeSongsFromPlaylist(song) {
         this.spotifyApi.removeTracksFromPlaylist(this.state.playlistId);
     }
@@ -184,7 +191,8 @@ class OxContextProvider extends Component {
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findAPlaylist: this.findAPlaylist.bind(this),
-                getPlaylistTracks: this.getPlaylistTracks.bind(this)
+                getPlaylistTracks: this.getPlaylistTracks.bind(this),
+                findPlaylistOnDB: this.findPlaylistOnDB.bind(this),
             }}>
                 {this.props.children}
             </OxContext.Provider>
