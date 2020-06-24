@@ -47,7 +47,7 @@ const styles = {
         justifyContent: 'center',
     },
     buttonText: {
-        fontSize: 25,
+        fontSize: 32,
         color: '#fff',
     },
     // formButton: {

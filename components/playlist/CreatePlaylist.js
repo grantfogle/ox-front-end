@@ -21,20 +21,23 @@ class CreatePlaylist extends Component {
 
     async submitNewPlaylist() {
         if (this.state.playlistName.length > 0) {
+            // const oxBackendPlaylistStatus = await this.context.createPlaylistOnDb();
+            // if (oxBackendPlaylistStatus) {
+            // }
             const playlistStatus = await this.context.createPlaylist(this.state.playlistName);
             if (playlistStatus) {
                 Actions.playlistHome();
             }
-            console.log('create playlist ran in createPlaylist component');
-            console.log('playlistStatus', playlistStatus);
             // check to make sure playlist was created and we have a new playlist ready to view
         } else {
+            //     flagg banner to let user now playlist already exists
             console.log('There was an error');
         }
     }
 
     render() {
-        const { container, headerText, formText, formButton, formButtonSelected, formCircle } = styles;
+        const { container, headerText, formText, formButton,
+            getStartedButton } = styles;
         return (
             <View style={container}>
                 <Text style={headerText}>Create Your Playlist</Text>
@@ -42,20 +45,8 @@ class CreatePlaylist extends Component {
                     <TextInput style={formText} placeholder="Playlist Name"
                         onChangeText={(text) => this.formUpdate(text)} />
                 </View>
-                <TouchableOpacity style={formButton}>
-                    <View style={formCircle} />
-                    <Text style={formText}>Allow Radio</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={formButton}>
-                    <View style={formCircle} />
-                    <Text style={formText}>Allow Veto</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={formButtonSelected}>
-                    <View style={formCircle} />
-                    <Text style={formText}>Allow Replays</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.submitNewPlaylist()}>
-                    <Text style={formText}>Get Started ----></Text>
+                <TouchableOpacity style={getStartedButton} onPress={() => this.submitNewPlaylist()}>
+                    <Text style={formText}>Get Started</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -71,23 +62,20 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#9b59b6',
     },
     headerText: {
         fontSize: 40,
         marginBottom: 40,
-        width: 400,
-        paddingLeft: 20,
-        color: '#000',
+        color: '#fff',
     },
     formButton: {
         width: '90%',
         height: 80,
         paddingLeft: 20,
         marginBottom: 20,
-        backgroundColor: '#fff',
-        borderWidth: 2,
-        borderColor: 'black',
+        // borderWidth: 2,
+        // borderColor: 'black',
         backgroundColor: '#fff',
         borderRadius: 15,
         flexDirection: 'row',
@@ -96,7 +84,7 @@ const styles = StyleSheet.create({
     },
     formText: {
         fontSize: 25,
-        width: '100%',
+        color: '#fff',
     },
     formCircle: {
         height: 20,
@@ -107,16 +95,14 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         backgroundColor: '#fff',
     },
-    formButtonSelected: {
+    getStartedButton: {
         width: '90%',
         height: 80,
-        paddingLeft: 20,
-        marginBottom: 20,
-        borderWidth: 2,
-        borderColor: '#9b59b6',
+        backgroundColor: '#8e44ad',
         borderRadius: 15,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#9b59b6',
-    }
+        justifyContent: 'center',
+        // backgroundColor: '#9b59b6',
+    },
 });
