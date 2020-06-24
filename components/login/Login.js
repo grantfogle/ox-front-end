@@ -1,40 +1,32 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { OxContext } from '../../contexts/OxContext';
 
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-        }
-    }
-
+    static contextType = OxContext;
     render() {
 
         const { background, formRow, formFill, loginHeader, loginHeaderText,
-            loginToggle, loginButtonText } = styles;
+            loginToggle, loginButtonText, formButton, formText, formButtonRow,
+            loginSubheaderText } = styles;
         return (
             <View style={background}>
                 <View style={loginHeader}>
                     <Text style={loginHeaderText}>Welcome to Ox</Text>
+                    <Text style={loginSubheaderText}>Music is better with friends</Text>
                 </View>
-                <View style={formRow}>
-                    <TextInput style={formFill} placeholder="Username" />
-                </View>
-                <View style={formRow}>
-                    <TextInput style={formFill} placeholder="Password" />
-                </View>
-                <View style={loginToggle}>
-                    <TouchableOpacity>
-                        <Text style={loginButtonText} onPress={() => Actions.start()}>Login</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={loginButtonText}>Sign Up</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={formButton}>
+                    <Text style={formText} onPress={async () => {
+                        const authCode = await this.context.getAuthorizationCode();
+                        const getToken = await this.context.getAccessToken(authCode);
+                        const getUser = await this.context.getUserInfo();
+                        if (getUser) {
+                            Actions.start();
+                        }
+                    }}>Login with Spotify</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -55,11 +47,16 @@ const styles = StyleSheet.create({
         height: 40,
         width: '100%',
         marginBottom: 20,
-        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'center',
     },
     loginHeaderText: {
         fontSize: 40,
+        color: '#fff',
+    },
+    loginSubheaderText: {
+        marginTop: 10,
+        fontSize: 20,
         color: '#fff',
     },
     formRow: {
@@ -82,5 +79,24 @@ const styles = StyleSheet.create({
     loginButtonText: {
         fontSize: 25,
         color: '#fff',
-    }
+    },
+    formButton: {
+        marginTop: 40,
+        width: '90%',
+        height: 80,
+        backgroundColor: '#1db954',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    // formButtonRow: {
+    //     height: '100%',
+    //     flexDirection: 'row',
+    //     alignItems: 'center',
+    // },
+    formText: {
+        fontSize: 25,
+        color: '#fff',
+    },
 });

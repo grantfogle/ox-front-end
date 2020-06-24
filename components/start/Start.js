@@ -11,12 +11,7 @@ const Start = () => {
         <OxContext.Consumer>{({ getAccessToken, getAuthorizationCode, getUserInfo }) => {
             return (
                 <View style={container}>
-                    <TouchableOpacity style={button} onPress={async () => {
-                        const authCode = await getAuthorizationCode();
-                        await getAccessToken(authCode);
-                        await getUserInfo();
-                        Actions.createPlaylist();
-                    }}>
+                    <TouchableOpacity style={button} onPress={() => Actions.createPlaylist()}>
                         <Text style={buttonText}>Start a Playlist</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={button} onPress={() => Actions.findPlaylist()}>
@@ -34,22 +29,44 @@ export default Start;
 const styles = {
     container: {
         flex: 1,
-        backgroundColor: '#9b59b6',
-        flexDirection: 'row',
-        alignItems: 'start',
-        justifyContent: 'space-between',
-    },
-    button: {
-        height: 80,
-        width: '50%',
-        backgroundColor: '#2c3e50',
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        // borderRadius: 25,
-        marginBottom: 20,
+        backgroundColor: '#9b59b6',
+    },
+    button: {
+        marginTop: 40,
+        width: '90%',
+        height: 80,
+        // backgroundColor: '#1db954',
+        backgroundColor: '#8e44ad',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonText: {
+        fontSize: 25,
         color: '#fff',
-        fontSize: 25
-    }
+    },
+    // formButton: {
+    //     marginTop: 40,
+    //     width: '90%',
+    //     height: 80,
+    //     backgroundColor: '#1db954',
+    //     borderRadius: 15,
+    //     flexDirection: 'row',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    // },
+    // formButtonRow: {
+    //     height: '100%',
+    //     flexDirection: 'row',
+    //     alignItems: 'center',
+    // },
+    // formText: {
+    //     fontSize: 25,
+    //     color: '#fff',
+    // },
 };

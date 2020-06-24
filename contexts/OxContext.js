@@ -107,6 +107,9 @@ class OxContextProvider extends Component {
     async getUserInfo() {
         const userInfo = await this.spotifyApi.getMe();
         this.setState({ spotifyUserId: userInfo.id });
+        if (userInfo) {
+            return true;
+        }
     }
 
     async createPlaylist(playlistName) {
@@ -170,10 +173,13 @@ class OxContextProvider extends Component {
     }
 
     async findPlaylistOnDB() {
-        const response = await fetch('https://localhost:8000/', {
+        await fetch('https://cors-anywhere.herokuapp.com/http://localhost:8000/', {
             method: 'GET'
-        });
-        console.log(response);
+        })
+            .then(response => {
+                console.log('responseeee5', response[0].json());
+                return 'cats';
+            });
     }
 
     async removeSongsFromPlaylist(song) {
