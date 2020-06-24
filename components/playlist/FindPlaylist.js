@@ -12,23 +12,29 @@ class FindPlaylist extends Component {
             playlistPassword: ''
         }
     }
+
+    joinPlaylist() {
+
+    }
+
     render() {
-        const { container, headerText, formText, formButton, formCircle } = styles;
+        const { container, headerText, formText, formButton, formCircle,
+            joinButton } = styles;
         return (
             <View style={container}>
                 <Text style={headerText}>Find a Playlist</Text>
                 <View style={formButton}>
-                    <TextInput style={formText} placeholder="Playlist Code" />
+                    <TextInput style={formText} placeholder="Playlist Name" />
                 </View>
                 <View style={formButton}>
                     <TextInput style={formText} placeholder="Playlist Password" />
                 </View>
-                <TouchableOpacity style={formButton} onPress={() => {
+                <TouchableOpacity style={joinButton} onPress={() => {
                     this.context.findPlaylistOnDB();
                     // this.context.getPlaylistTracks();
                     Actions.playlistHome();
                 }}>
-                    <Text style={formText}>Join  ----></Text>
+                    <Text style={formText}>Join Playlist</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -49,26 +55,24 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 40,
         marginBottom: 40,
-        width: 400,
-        paddingLeft: 20,
-        color: '#000',
+        color: '#fff',
     },
     formButton: {
         width: '90%',
         height: 80,
         paddingLeft: 20,
         marginBottom: 20,
-        backgroundColor: '#fff',
-        borderWidth: 2,
-        borderColor: 'black',
+        // borderWidth: 2,
+        // borderColor: 'black',
         backgroundColor: '#fff',
         borderRadius: 15,
         flexDirection: 'row',
         alignItems: 'center',
+        // backgroundColor: '#9b59b6',
     },
     formText: {
         fontSize: 25,
-        width: '100%',
+        color: '#fff',
     },
     formCircle: {
         height: 20,
@@ -77,5 +81,16 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#000',
-    }
+        backgroundColor: '#fff',
+    },
+    joinButton: {
+        width: '90%',
+        height: 80,
+        backgroundColor: '#8e44ad',
+        borderRadius: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor: '#9b59b6',
+    },
 });

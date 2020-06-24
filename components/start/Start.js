@@ -50,23 +50,4 @@ const styles = {
         fontSize: 32,
         color: '#fff',
     },
-    // formButton: {
-    //     marginTop: 40,
-    //     width: '90%',
-    //     height: 80,
-    //     backgroundColor: '#1db954',
-    //     borderRadius: 15,
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // },
-    // formButtonRow: {
-    //     height: '100%',
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    // },
-    // formText: {
-    //     fontSize: 25,
-    //     color: '#fff',
-    // },
 };

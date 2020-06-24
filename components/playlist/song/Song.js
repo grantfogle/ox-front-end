@@ -30,13 +30,17 @@ export default Song;
 const styles = {
     songRow: {
         width: '100%',
-        height: 60,
+        paddingTop: 4,
+        paddingBottom: 4,
+        minheight: 60,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingLeft: 5,
         paddingRight: 5,
         marginTop: 2,
+        borderBottomWidth: 1,
+        borderBottomColor: '#8e44ad',
     },
     songDetails: {
         height: '100%',
@@ -59,7 +63,7 @@ const styles = {
     vetoSong: {
         height: 36,
         width: 60,
-        backgroundColor: '#e74c3c',
+        backgroundColor: '#8e44ad',
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'

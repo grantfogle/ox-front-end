@@ -44,32 +44,34 @@ export default SearchBar;
 const styles = StyleSheet.create({
     searchBox: {
         width: '100%',
-        height: 60,
-        backgroundColor: '#9b59b6',
+        height: 80,
+        // backgroundColor: '#9b59b6',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#8e44ad',
     },
     searchButton: {
-        width: '20%',
-        height: 35,
-        borderWidth: 1,
-        borderColor: '#fff',
+        marginLeft: 10,
+        width: 100,
+        height: 40,
+        backgroundColor: '#8e44ad',
         color: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 3,
     },
     searchButtonText: {
-        fontSize: 25,
+        fontSize: 24,
         color: '#fff',
     },
     searchInput: {
-        height: 35,
-        width: '75%',
+        height: 40,
+        width: 250,
         backgroundColor: '#fff',
         paddingLeft: 10,
-        fontSize: 25,
+        fontSize: 20,
         borderRadius: 3,
     }
 });

@@ -9,9 +9,6 @@ class CreatePlaylist extends Component {
         super(props);
         this.state = {
             playlistName: '',
-            allowRadio: false,
-            allowVeto: false,
-            allowRepost: false,
         }
     }
 

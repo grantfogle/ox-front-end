@@ -27,7 +27,6 @@ class PlaylistHome extends Component {
             <View style={container}>
                 <SearchBar />
                 {this.displayPlaylist()}
-                {/* {this.getSpotifyResults()} */}
             </View>
         );
     }
