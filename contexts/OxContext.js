@@ -165,7 +165,8 @@ class OxContextProvider extends Component {
                     let album = song.album.artists.map(album => album.name);
                     let id = song.id;
                     let uri = song.uri;
-                    return { name, artist, album, id, uri };
+                    let art = song.album.images[2].url;
+                    return { name, artist, album, id, uri, art };
                 })
                 this.setState({ searchedSongs: mappedSongResponse });
             })
