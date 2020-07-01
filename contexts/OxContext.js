@@ -31,12 +31,12 @@ class OxContextProvider extends Component {
         playlistId: '4kcjIFRliZWc7bGe597Dmj',
         songs: [],
         currentPlaylist: [
-            { id: 1, name: 'Flashing Lights', artists: ['Kanye West'], art: '' },
-            { id: 2, name: 'Fly Me to The Moon', artists: ['Frank Sinatra'], art: '' },
-            { id: 3, name: 'Apparently', artists: ['J. Cole'], art: '' },
-            { id: 4, name: 'Underwater', artists: ['Rufus Du Sol'], art: '' },
-            { id: 5, name: 'Heartache on the Dancefloor', artists: ['Jon Pardi'], art: '' },
-            { id: 6, name: '22', artists: ['Taylor Swift'], art: '' }
+            { id: 1, name: 'Flashing Lights', artists: ['Kanye West'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
+            { id: 2, name: 'Fly Me to The Moon', artists: ['Frank Sinatra'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
+            { id: 3, name: 'Apparently', artists: ['J. Cole'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
+            { id: 4, name: 'Underwater', artists: ['Rufus Du Sol'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
+            { id: 5, name: 'Heartache on the Dancefloor', artists: ['Jon Pardi'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
+            { id: 6, name: '22', artists: ['Taylor Swift'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' }
         ],
         searchedSongs: [],
         showSearchResults: true,
@@ -173,13 +173,30 @@ class OxContextProvider extends Component {
     }
 
     async findPlaylistOnDB() {
-        await fetch('https://cors-anywhere.herokuapp.com/http://localhost:8000/', {
-            method: 'GET'
+        console.log('called findplaylist on db');
+        const proxy = 'https://cors-anywhere.herokuapp.com/';
+        // const playlistReturned = '';
+        // const response = await fetch(proxy + 'http://localhost:8000/');
+        // console.log('it worked', response);
+        await fetch(proxy + 'http://localhost:8000/', {
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': 'exp://192.168.7.178:19000',
+            },
         })
             .then(response => {
-                console.log('responseeee5', response[0].json());
-                return 'cats';
-            });
+                console.log('cats');
+                console.log('it worked', response);
+                // playlistReturned = response.json();
+                // return response.json();
+            })
+        //const json = await JSON.parse(response);
+        // console.log('find db function was called', json);
+        // .then(response => {
+        //     console.log('responseeee5', response[0].json());
+        // return 'cats';
+        // });
+        // this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
     async removeSongsFromPlaylist(song) {

@@ -39,7 +39,6 @@ const styles = {
         marginTop: 40,
         width: '90%',
         height: 80,
-        // backgroundColor: '#1db954',
         backgroundColor: '#8e44ad',
         borderRadius: 15,
         flexDirection: 'row',

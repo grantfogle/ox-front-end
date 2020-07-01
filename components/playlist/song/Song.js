@@ -30,21 +30,16 @@ export default Song;
 const styles = {
     songRow: {
         width: '100%',
-        paddingTop: 4,
-        paddingBottom: 4,
+        padding: 5,
         minheight: 60,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingLeft: 5,
-        paddingRight: 5,
-        marginTop: 2,
         borderBottomWidth: 1,
         borderBottomColor: '#8e44ad',
     },
     songDetails: {
-        height: '100%',
-        width: '60%',
+        width: 200,
         flexDirection: 'row',
     },
     songInfo: {

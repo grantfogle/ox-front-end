@@ -8,29 +8,29 @@ class FindPlaylist extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            playlistCode: '',
-            playlistPassword: ''
+            playlistName: '',
         }
     }
 
-    joinPlaylist() {
-
+    formUpdate(text) {
+        this.setState({ playlistName: text });
     }
 
     render() {
-        const { container, headerText, formText, formButton, formCircle,
+        const { container, headerText, formText, formFillText, formButton, formCircle,
             joinButton } = styles;
         return (
             <View style={container}>
                 <Text style={headerText}>Find a Playlist</Text>
                 <View style={formButton}>
-                    <TextInput style={formText} placeholder="Playlist Name" />
+                    <TextInput style={formFillText} placeholder="Playlist Name"
+                        onChangeText={(text) => this.formUpdate(text)} />
                 </View>
-                <View style={formButton}>
+                {/* <View style={formButton}>
                     <TextInput style={formText} placeholder="Playlist Password" />
-                </View>
+                </View> */}
                 <TouchableOpacity style={joinButton} onPress={() => {
-                    this.context.findPlaylistOnDB();
+                    this.context.findPlaylistOnDB(this.state.playlistName);
                     // this.context.getPlaylistTracks();
                     Actions.playlistHome();
                 }}>
@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
     formText: {
         fontSize: 25,
         color: '#fff',
+    },
+    formFillText: {
+        fontSize: 25,
     },
     formCircle: {
         height: 20,
