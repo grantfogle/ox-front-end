@@ -175,13 +175,18 @@ class OxContextProvider extends Component {
 
     async findPlaylistOnDB() {
         let returnedPlaylistId = '';
-        await fetch('https://ox-db.herokuapp.com/', {
+        let playlistSearched = 'firstplaylist';
+        await fetch('https://ox-db.herokuapp.com/playlist', {
             method: 'GET',
+            body: {
+                'playlistName': playlistSearched,
+            },
         })
             .then(response => response.json())
             .then(data => {
                 returnedPlaylist = data;
             });
+        console.log('returnedPlaylistId');
         // this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
