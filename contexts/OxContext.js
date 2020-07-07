@@ -174,29 +174,14 @@ class OxContextProvider extends Component {
     }
 
     async findPlaylistOnDB() {
-        console.log('called findplaylist on db');
-        const proxy = 'https://cors-anywhere.herokuapp.com/';
-        // const playlistReturned = '';
-        // const response = await fetch(proxy + 'http://localhost:8000/');
-        // console.log('it worked', response);
-        await fetch(proxy + 'http://localhost:8000/', {
+        let returnedPlaylistId = '';
+        await fetch('https://ox-db.herokuapp.com/', {
             method: 'GET',
-            headers: {
-                'Access-Control-Allow-Origin': 'exp://192.168.7.178:19000',
-            },
         })
-            .then(response => {
-                console.log('cats');
-                console.log('it worked', response);
-                // playlistReturned = response.json();
-                // return response.json();
-            })
-        //const json = await JSON.parse(response);
-        // console.log('find db function was called', json);
-        // .then(response => {
-        //     console.log('responseeee5', response[0].json());
-        // return 'cats';
-        // });
+            .then(response => response.json())
+            .then(data => {
+                returnedPlaylist = data;
+            });
         // this.spotifyApi.getPlaylist(this.state.playlistId);
     }
 
