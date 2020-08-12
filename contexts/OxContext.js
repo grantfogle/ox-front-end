@@ -30,14 +30,7 @@ class OxContextProvider extends Component {
         playlistSongs: [],
         playlistId: '4kcjIFRliZWc7bGe597Dmj',
         songs: [],
-        currentPlaylist: [
-            { id: 1, name: 'Flashing Lights', artists: ['Kanye West'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
-            { id: 2, name: 'Fly Me to The Moon', artists: ['Frank Sinatra'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
-            { id: 3, name: 'Apparently', artists: ['J. Cole'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
-            { id: 4, name: 'Underwater', artists: ['Rufus Du Sol'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
-            { id: 5, name: 'Heartache on the Dancefloor', artists: ['Jon Pardi'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' },
-            { id: 6, name: '22', artists: ['Taylor Swift'], art: 'https://upload.wikimedia.org/wikipedia/en/7/70/Graduation_%28album%29.jpg' }
-        ],
+        currentPlaylist: [],
         searchedSongs: [],
         showSearchResults: true,
     };
@@ -173,21 +166,30 @@ class OxContextProvider extends Component {
         return true;
     }
 
-    async findPlaylistOnDB() {
-        let returnedPlaylistId = '';
-        let playlistSearched = 'firstplaylist';
-        await fetch('https://ox-db.herokuapp.com/playlist', {
-            method: 'GET',
-            body: {
-                'playlistName': playlistSearched,
+    async findPlaylistOnDB(name) {
+        let returnedPlaylist,
+            playlistinfoFromDB;
+        const playlistInfo = { playlistName: name };
+        console.log('Find playlist on db ran', name);
+        await fetch('https://ox-db.herokuapp.com/find-playlist', {
+            method: 'POST',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
             },
+            // body: `playlistName=${name}`,
+            body: JSON.stringify(playlistInfo)
         })
             .then(response => response.json())
             .then(data => {
-                returnedPlaylist = data;
-            });
-        console.log('returnedPlaylistId');
-        // this.spotifyApi.getPlaylist(this.state.playlistId);
+                // returnedPlaylist = data;
+                console.log(data[0]);
+                playlistinfoFromDB = data[0];
+            })
+        this.setState({ playlistId: playlistinfoFromDB.spotifyId });
+        this.getPlaylistTracks();
+        // returnedPlaylist = await this.spotifyApi.getPlaylist(playlistinfoFromDB.spotifyId);
     }
 
     async removeSongsFromPlaylist(song) {
