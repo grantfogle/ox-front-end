@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { OxContext } from '../../contexts/OxContext';
-
 
 class Login extends Component {
     static contextType = OxContext;
@@ -13,6 +12,7 @@ class Login extends Component {
             loginSubheaderText } = styles;
         return (
             <View style={background}>
+                {/* <Image source={require('../../assets/ox-logo-copy.png')} style={{ width: 150, height: 150 }} /> */}
                 <View style={loginHeader}>
                     <Text style={loginHeaderText}>Welcome to Ox</Text>
                     <Text style={loginSubheaderText}>Music is better with friends</Text>

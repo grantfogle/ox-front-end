@@ -112,6 +112,12 @@ class OxContextProvider extends Component {
             public: false,
             collaborative: true
         }
+        const dbBody = {
+            name: playlistName,
+            password: 'password',
+        }
+        // find playlist, if not found then create playlist
+
         // { name: playlistName, public: true, collaborative: true }
         // this.spotifyApi.createPlaylist(this.state.spotifyUserId)
         const createdPlaylist = await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body);
