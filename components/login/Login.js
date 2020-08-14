@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { OxContext } from '../../contexts/OxContext';
+// import Logo from '../../assets/small-ox-logo.png';
 
 class Login extends Component {
     static contextType = OxContext;
     render() {
 
-        const { background, formRow, formFill, loginHeader, loginHeaderText,
+        const { background, logoStyle, formFill, loginHeader, loginHeaderText,
             loginToggle, loginButtonText, formButton, formText, formButtonRow,
             loginSubheaderText } = styles;
         return (
             <View style={background}>
                 {/* <Image source={require('../../assets/ox-logo-copy.png')} style={{ width: 150, height: 150 }} /> */}
+                {/* <Image style={logoStyle} source={Logo} /> */}
                 <View style={loginHeader}>
                     <Text style={loginHeaderText}>Welcome to Ox</Text>
                     <Text style={loginSubheaderText}>Music is better with friends</Text>
@@ -49,6 +51,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    logoStyle: {
+        width: 120,
+        height: 100,
+        marginBottom: 40,
     },
     loginHeaderText: {
         fontSize: 40,
