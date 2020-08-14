@@ -9,6 +9,7 @@ class CreatePlaylist extends Component {
         super(props);
         this.state = {
             playlistName: '',
+            spotifyName: ''
         }
     }
 
@@ -39,6 +40,10 @@ class CreatePlaylist extends Component {
         return (
             <View style={container}>
                 <Text style={headerText}>Create Your Playlist</Text>
+                <View style={formButton}>
+                    <TextInput style={formText} placeholder="Spotify Name"
+                        onChangeText={(text) => this.formUpdate(text)} />
+                </View>
                 <View style={formButton}>
                     <TextInput style={formText} placeholder="Playlist Name"
                         onChangeText={(text) => this.formUpdate(text)} />
