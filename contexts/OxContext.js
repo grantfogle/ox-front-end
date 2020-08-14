@@ -105,7 +105,24 @@ class OxContextProvider extends Component {
         }
     }
 
-    async createPlaylistOnDB(playlistName) {
+    async createPlaylistOnDB(name) {
+        const playlistInfo = {
+            playlistName: name,
+            spotifyUserId: this.state.spotifyUserId,
+        };
+        await fetch('https://ox-db.herokuapp.com/create-playlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(playlistInfo)
+        })
+            .then(response => response.json())
+            .then(data => {
+                playlistinfoFromDB = data[0];
+            })
+        this.setState({ playlistId: playlistinfoFromDB.spotifyId });
 
     }
 
@@ -208,6 +225,7 @@ class OxContextProvider extends Component {
                 getUserInfo: this.getUserInfo.bind(this),
                 searchSongs: this.searchSongs.bind(this),
                 createPlaylist: this.createPlaylist.bind(this),
+                createPlaylistOnDB: this.createPlaylistOnDB.bind(this),
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findAPlaylist: this.findAPlaylist.bind(this),

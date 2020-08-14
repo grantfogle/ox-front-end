@@ -13,21 +13,25 @@ class CreatePlaylist extends Component {
         }
     }
 
-    formUpdate(text) {
+    updateSpotifyName(text) {
+        this.setState({ spotifyName: text });
+    }
+
+    updatePlaylistName(text) {
         this.setState({ playlistName: text });
     }
 
     async submitNewPlaylist() {
         // https://ox-db.herokuapp.com/
         if (this.state.playlistName.length > 0) {
-            // const oxBackendPlaylistStatus = await this.context.createPlaylistOnDb();
-            // if (oxBackendPlaylistStatus) {
-            // }
-            const playlistStatus = await this.context.createPlaylist(this.state.playlistName);
-            if (playlistStatus) {
-                Actions.playlistHome();
+            const playlistOnDB = await this.context.createPlaylistOnDB(this.state.playlistName);
+            console.log(playlistOnDB)
+            if (playlistOnDB === 204) {
+                const playlistStatus = await this.context.createPlaylist(this.state.spotifyName);
+                if (playlistStatus) {
+                    Actions.playlistHome();
+                }
             }
-            // check to make sure playlist was created and we have a new playlist ready to view
         } else {
             //     flagg banner to let user now playlist already exists
             console.log('There was an error');
