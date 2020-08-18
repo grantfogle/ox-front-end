@@ -126,7 +126,31 @@ class OxContextProvider extends Component {
 
     }
 
-    async createPlaylist(playlistName) {
+    async doesPlaylistExist(playlistName) {
+        let isPlaylistNameUnique = false;
+        await fetch(`https://ox-db.herokuapp.com/playlist-playlist/${playlistName}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.length === 0) {
+                    isPlaylistNameUnique = true;
+                }
+            });
+
+        if (isPlaylistNameUnique) {
+            // run create playlist on spotify
+        }
+        return isPlaylistNameUnique;
+    }
+
+    async createPlaylistOnSpotify(playlistName) {
+
         let playlistCreated = false;
         const body = {
             name: playlistName,
