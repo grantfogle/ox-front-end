@@ -21,36 +21,46 @@ class CreatePlaylist extends Component {
         this.setState({ playlistName: text });
     }
 
+    displayError(errorMessage) {
+        // enable alert message
+        console.log(errorMessage);
+    }
+
     async submitNewPlaylist() {
         // https://ox-db.herokuapp.com/
-        if (this.state.playlistName.length > 0) {
-            const playlistOnDB = await this.context.createPlaylistOnDB(this.state.playlistName);
-            console.log(playlistOnDB)
-            if (playlistOnDB === 204) {
-                const playlistStatus = await this.context.createPlaylist(this.state.spotifyName);
+        const isPlaylistNameUnique = await this.context.doesPlaylistExist(this.state.playlistName);
+        console.log('step 1', isPlaylistNameUnique);
+        if (isPlaylistNameUnique) {
+            if (this.state.playlistName.length > 0) {
+                console.log('step 2');
+                const playlistStatus = await this.context.createPlaylist(this.state.spotifyName, this.state.playlistName);
+                console.log(playlistStatus);
                 if (playlistStatus) {
                     Actions.playlistHome();
                 }
+            } else {
+                console.log('There was an error');
             }
         } else {
-            //     flagg banner to let user now playlist already exists
-            console.log('There was an error');
+            this.displayError('Playlist has already been created, please change playlist name');
         }
     }
 
+    // check for errors on submit
+
     render() {
-        const { container, headerText, formText, formButton,
+        const { container, headerText, formText, formFillText, formButton,
             getStartedButton } = styles;
         return (
             <View style={container}>
                 <Text style={headerText}>Create Your Playlist</Text>
                 <View style={formButton}>
-                    <TextInput style={formText} placeholder="Spotify Name"
-                        onChangeText={(text) => this.formUpdate(text)} />
+                    <TextInput style={formFillText} placeholder="Spotify Name"
+                        onChangeText={(text) => this.updateSpotifyName(text)} />
                 </View>
                 <View style={formButton}>
-                    <TextInput style={formText} placeholder="Playlist Name"
-                        onChangeText={(text) => this.formUpdate(text)} />
+                    <TextInput style={formFillText} placeholder="Playlist Name"
+                        onChangeText={(text) => this.updatePlaylistName(text)} />
                 </View>
                 <TouchableOpacity style={getStartedButton} onPress={() => this.submitNewPlaylist()}>
                     <Text style={formText}>Get Started</Text>
@@ -92,6 +102,10 @@ const styles = StyleSheet.create({
     formText: {
         fontSize: 25,
         color: '#fff',
+    },
+    formFillText: {
+        fontSize: 25,
+        color: '#2c3e50'
     },
     formCircle: {
         height: 20,

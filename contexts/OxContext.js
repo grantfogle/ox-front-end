@@ -123,12 +123,11 @@ class OxContextProvider extends Component {
                 playlistinfoFromDB = data[0];
             })
         this.setState({ playlistId: playlistinfoFromDB.spotifyId });
-
     }
 
     async doesPlaylistExist(playlistName) {
         let isPlaylistNameUnique = false;
-        await fetch(`https://ox-db.herokuapp.com/playlist-playlist/${playlistName}`, {
+        await fetch(`https://ox-db.herokuapp.com/playlist/${playlistName}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -137,29 +136,25 @@ class OxContextProvider extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.length === 0) {
                     isPlaylistNameUnique = true;
                 }
             });
 
-        if (isPlaylistNameUnique) {
-            // run create playlist on spotify
-        }
         return isPlaylistNameUnique;
     }
 
-    async createPlaylistOnSpotify(playlistName) {
-
+    async createPlaylist(spotifyName, dbPlaylistName) {
         let playlistCreated = false;
         const body = {
-            name: playlistName,
+            name: spotifyName,
             public: false,
             collaborative: true
         }
-        const dbBody = {
-            name: playlistName,
-            password: 'password',
+        let dbBody = {
+            playlistName: dbPlaylistName,
+            spotifyUserId: this.state.spotifyUserId,
+            spotifyPlaylistId: '',
         }
         // find playlist, if not found then create playlist
 
@@ -167,10 +162,25 @@ class OxContextProvider extends Component {
         // this.spotifyApi.createPlaylist(this.state.spotifyUserId)
         const createdPlaylist = await this.spotifyApi.createPlaylist(this.state.spotifyUserId, body);
         this.setState({ playlistId: createdPlaylist.id });
-        if (createdPlaylist.collaborative) {
-            playlistCreated = true;
-            // fetch playlist or set 
-        }
+        console.log('step 3', createdPlaylist);
+        dbBody.spotifyPlaylistId = this.state.playlistId;
+
+        await fetch('https://ox-db.herokuapp.com/playlist/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(dbBody)
+        })
+            .then(response => {
+                console.log('step 4: response', response.status);
+                // playlistinfoFromDB = data[0];
+                if (response.status === 204) {
+                    playlistCreated = true;
+                }
+            });
+
         return playlistCreated;
     }
 
@@ -241,6 +251,10 @@ class OxContextProvider extends Component {
         this.spotifyApi.removeTracksFromPlaylist(this.state.playlistId);
     }
 
+    // get user plyaback to see what's being played
+    // can i control user playback on someone else's device??
+    // handle better 
+
     render() {
         return (
             <OxContext.Provider value={{
@@ -249,12 +263,12 @@ class OxContextProvider extends Component {
                 getUserInfo: this.getUserInfo.bind(this),
                 searchSongs: this.searchSongs.bind(this),
                 createPlaylist: this.createPlaylist.bind(this),
-                createPlaylistOnDB: this.createPlaylistOnDB.bind(this),
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findAPlaylist: this.findAPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findPlaylistOnDB: this.findPlaylistOnDB.bind(this),
+                doesPlaylistExist: this.doesPlaylistExist.bind(this)
             }}>
                 {this.props.children}
             </OxContext.Provider>
