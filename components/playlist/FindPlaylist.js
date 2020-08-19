@@ -26,13 +26,13 @@ class FindPlaylist extends Component {
                     <TextInput style={formFillText} placeholder="Playlist Name"
                         onChangeText={(text) => this.formUpdate(text)} />
                 </View>
-                {/* <View style={formButton}>
-                    <TextInput style={formText} placeholder="Playlist Password" />
-                </View> */}
-                <TouchableOpacity style={joinButton} onPress={() => {
-                    this.context.findPlaylistOnDB(this.state.playlistName);
-                    // this.context.getPlaylistTracks();
-                    Actions.playlistHome();
+                <TouchableOpacity style={joinButton} onPress={async () => {
+                    const findPlaylistStatus = await this.context.findPlaylistOnDB(this.state.playlistName);
+                    if (findPlaylistStatus) {
+                        Actions.playlistHome();
+                    } else {
+                        // throw error
+                    }
                 }}>
                     <Text style={formText}>Join Playlist</Text>
                 </TouchableOpacity>

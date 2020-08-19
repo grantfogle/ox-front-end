@@ -27,14 +27,11 @@ class CreatePlaylist extends Component {
     }
 
     async submitNewPlaylist() {
-        // https://ox-db.herokuapp.com/
         const isPlaylistNameUnique = await this.context.doesPlaylistExist(this.state.playlistName);
-        console.log('step 1', isPlaylistNameUnique);
+
         if (isPlaylistNameUnique) {
             if (this.state.playlistName.length > 0) {
-                console.log('step 2');
                 const playlistStatus = await this.context.createPlaylist(this.state.spotifyName, this.state.playlistName);
-                console.log(playlistStatus);
                 if (playlistStatus) {
                     Actions.playlistHome();
                 }
