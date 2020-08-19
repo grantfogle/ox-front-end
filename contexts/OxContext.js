@@ -236,7 +236,12 @@ class OxContextProvider extends Component {
         this.spotifyApi.removeTracksFromPlaylist(this.state.playlistId);
     }
 
-    // get user plyaback to see what's being played
+    // async vetoCurrentSong() {
+    //     this.spotifyApi.skipToNext()
+    // }
+    async fetchUserPlayback() {
+    }
+    // fetch user playback - get user plyaback to see what's being played
     // can i control user playback on someone else's device??
     // handle better 
 
