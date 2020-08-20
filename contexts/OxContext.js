@@ -208,8 +208,8 @@ class OxContextProvider extends Component {
 
     async findPlaylistOnDB(name) {
         let playlistFetched = false;
-        let returnedPlaylist,
-            playlistinfoFromDB;
+        let returnedPlaylist;
+        // playlistinfoFromDB;
         const playlistInfo = { playlistName: name };
         await fetch('https://ox-db.herokuapp.com/playlist', {
             method: 'POST',
@@ -221,14 +221,19 @@ class OxContextProvider extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('data', data)
-                if (data[0]) {
+                console.log('cats', data.length);
+                if (data.length > 0) {
+                    console.log('do something');
                     playlistFetched = true;
-                    playlistinfoFromDB = data[0];
+                    // playlistinfoFromDB = data[0];
+                    this.setState({ playlistId: data[0].spotifyPlaylistId });
                 }
             })
-        this.setState({ playlistId: playlistinfoFromDB.spotifyPlaylistId });
-        this.getPlaylistTracks();
+        console.log(playlistFetched);
+        if (playlistFetched) {
+            this.getPlaylistTracks();
+        }
+
         return playlistFetched;
     }
 
@@ -240,6 +245,8 @@ class OxContextProvider extends Component {
     //     this.spotifyApi.skipToNext()
     // }
     async fetchUserPlayback() {
+        this.spotifyApi.getMyCurrentPlaybackState();
+        // this.spotifyApi.getMyCurrentPlayingTrack();
     }
     // fetch user playback - get user plyaback to see what's being played
     // can i control user playback on someone else's device??

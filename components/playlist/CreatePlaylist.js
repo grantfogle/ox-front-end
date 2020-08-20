@@ -21,6 +21,22 @@ class CreatePlaylist extends Component {
         this.setState({ playlistName: text });
     }
 
+    createTwoButtonAlert(title, subTitle) {
+        Alert.alert(
+            title,
+            subTitle,
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        );
+    }
+
     displayError(errorMessage) {
         // enable alert message
         console.log(errorMessage);

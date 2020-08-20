@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { OxContext } from '../../contexts/OxContext';
 
@@ -16,6 +16,22 @@ class FindPlaylist extends Component {
         this.setState({ playlistName: text });
     }
 
+    createTwoButtonAlert(title, subTitle) {
+        Alert.alert(
+            title,
+            subTitle,
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        );
+    }
+
     render() {
         const { container, headerText, formText, formFillText, formButton, formCircle,
             joinButton } = styles;
@@ -27,11 +43,15 @@ class FindPlaylist extends Component {
                         onChangeText={(text) => this.formUpdate(text)} />
                 </View>
                 <TouchableOpacity style={joinButton} onPress={async () => {
-                    const findPlaylistStatus = await this.context.findPlaylistOnDB(this.state.playlistName);
-                    if (findPlaylistStatus) {
-                        Actions.playlistHome();
+                    if (this.state.playlistName.length > 0) {
+                        const findPlaylistStatus = await this.context.findPlaylistOnDB(this.state.playlistName);
+                        if (findPlaylistStatus) {
+                            return Actions.playlistHome();
+                        } else {
+                            return this.createTwoButtonAlert('Playlist Not Found', 'Please try again');
+                        }
                     } else {
-                        // throw error
+                        return this.createTwoButtonAlert('Please Enter Text');
                     }
                 }}>
                     <Text style={formText}>Join Playlist</Text>
