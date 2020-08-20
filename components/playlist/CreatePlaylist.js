@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Alert, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { OxContext } from '../../contexts/OxContext';
 
@@ -21,7 +21,7 @@ class CreatePlaylist extends Component {
         this.setState({ playlistName: text });
     }
 
-    createTwoButtonAlert(title, subTitle) {
+    displayError(title, subTitle) {
         Alert.alert(
             title,
             subTitle,
@@ -37,29 +37,30 @@ class CreatePlaylist extends Component {
         );
     }
 
-    displayError(errorMessage) {
-        // enable alert message
-        console.log(errorMessage);
-    }
-
     async submitNewPlaylist() {
         const isPlaylistNameUnique = await this.context.doesPlaylistExist(this.state.playlistName);
+
+        if (this.state.playlistName.length === 0) {
+            return this.displayError('Please Enter a Name for Your Playlist')
+        }
+
+        if (this.state.spotifyName.length === 0) {
+            return this.displayError('Please Enter a Name for Your Spotify Playlist')
+        }
 
         if (isPlaylistNameUnique) {
             if (this.state.playlistName.length > 0) {
                 const playlistStatus = await this.context.createPlaylist(this.state.spotifyName, this.state.playlistName);
                 if (playlistStatus) {
-                    Actions.playlistHome();
+                    return Actions.playlistHome();
                 }
             } else {
-                console.log('There was an error');
+                return this.displayError('There appears to be an error', 'Please try again')
             }
         } else {
-            this.displayError('Playlist has already been created, please change playlist name');
+            return this.displayError('Playlist Name Already Exists', 'Please try again');
         }
     }
-
-    // check for errors on submit
 
     render() {
         const { container, headerText, formText, formFillText, formButton,
@@ -75,7 +76,7 @@ class CreatePlaylist extends Component {
                     <TextInput style={formFillText} placeholder="Playlist Name"
                         onChangeText={(text) => this.updatePlaylistName(text)} />
                 </View>
-                <TouchableOpacity style={getStartedButton} onPress={() => this.submitNewPlaylist()}>
+                <TouchableOpacity style={getStartedButton} onPress={async () => await this.submitNewPlaylist()}>
                     <Text style={formText}>Get Started</Text>
                 </TouchableOpacity>
             </View>

@@ -208,8 +208,6 @@ class OxContextProvider extends Component {
 
     async findPlaylistOnDB(name) {
         let playlistFetched = false;
-        let returnedPlaylist;
-        // playlistinfoFromDB;
         const playlistInfo = { playlistName: name };
         await fetch('https://ox-db.herokuapp.com/playlist', {
             method: 'POST',
@@ -221,15 +219,11 @@ class OxContextProvider extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('cats', data.length);
                 if (data.length > 0) {
-                    console.log('do something');
                     playlistFetched = true;
-                    // playlistinfoFromDB = data[0];
                     this.setState({ playlistId: data[0].spotifyPlaylistId });
                 }
             })
-        console.log(playlistFetched);
         if (playlistFetched) {
             this.getPlaylistTracks();
         }

@@ -16,7 +16,7 @@ class FindPlaylist extends Component {
         this.setState({ playlistName: text });
     }
 
-    createTwoButtonAlert(title, subTitle) {
+    displayAlert(title, subTitle) {
         Alert.alert(
             title,
             subTitle,
@@ -32,6 +32,19 @@ class FindPlaylist extends Component {
         );
     }
 
+    async searchForPlaylist() {
+        if (this.state.playlistName.length > 0) {
+            const findPlaylistStatus = await this.context.findPlaylistOnDB(this.state.playlistName);
+            if (findPlaylistStatus) {
+                return Actions.playlistHome();
+            } else {
+                return this.displayAlert('Playlist Not Found', 'Please try again');
+            }
+        } else {
+            return this.displayAlert('Please Enter Text');
+        }
+    }
+
     render() {
         const { container, headerText, formText, formFillText, formButton, formCircle,
             joinButton } = styles;
@@ -42,18 +55,7 @@ class FindPlaylist extends Component {
                     <TextInput style={formFillText} placeholder="Playlist Name"
                         onChangeText={(text) => this.formUpdate(text)} />
                 </View>
-                <TouchableOpacity style={joinButton} onPress={async () => {
-                    if (this.state.playlistName.length > 0) {
-                        const findPlaylistStatus = await this.context.findPlaylistOnDB(this.state.playlistName);
-                        if (findPlaylistStatus) {
-                            return Actions.playlistHome();
-                        } else {
-                            return this.createTwoButtonAlert('Playlist Not Found', 'Please try again');
-                        }
-                    } else {
-                        return this.createTwoButtonAlert('Please Enter Text');
-                    }
-                }}>
+                <TouchableOpacity style={joinButton} onPress={async () => this.searchForPlaylist()}>
                     <Text style={formText}>Join Playlist</Text>
                 </TouchableOpacity>
             </View>
