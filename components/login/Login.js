@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { OxContext } from '../../contexts/OxContext';
-// import Logo from '../../assets/small-ox-logo.png';
+import Logo from '../../assets/logo-white.png';
 
 class Login extends Component {
     static contextType = OxContext;
@@ -14,7 +14,7 @@ class Login extends Component {
         return (
             <View style={background}>
                 {/* <Image source={require('../../assets/ox-logo-copy.png')} style={{ width: 150, height: 150 }} /> */}
-                {/* <Image style={logoStyle} source={Logo} /> */}
+                <Image style={logoStyle} source={Logo} />
                 <View style={loginHeader}>
                     <Text style={loginHeaderText}>Welcome to Ox</Text>
                     <Text style={loginSubheaderText}>Music is better with friends</Text>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     logoStyle: {
-        width: 120,
+        width: 140,
         height: 100,
         marginBottom: 40,
     },

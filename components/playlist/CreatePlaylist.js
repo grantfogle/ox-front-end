@@ -37,28 +37,39 @@ class CreatePlaylist extends Component {
         );
     }
 
-    async submitNewPlaylist() {
-        const isPlaylistNameUnique = await this.context.doesPlaylistExist(this.state.playlistName);
-
+    checkForErrors() {
+        let errorsExist = false;
         if (this.state.playlistName.length === 0) {
-            return this.displayError('Please Enter a Name for Your Playlist')
+            errorsExist = true;
+            this.displayError('Please Enter a Name for Your Playlist')
         }
 
         if (this.state.spotifyName.length === 0) {
-            return this.displayError('Please Enter a Name for Your Spotify Playlist')
+            errorsExist = true;
+            this.displayError('Please Enter a Name for Your Spotify Playlist')
         }
 
-        if (isPlaylistNameUnique) {
-            if (this.state.playlistName.length > 0) {
-                const playlistStatus = await this.context.createPlaylist(this.state.spotifyName, this.state.playlistName);
-                if (playlistStatus) {
-                    return Actions.playlistHome();
+        return errorsExist;
+    }
+
+    async submitNewPlaylist() {
+        const errorsExist = this.checkForErrors();
+
+        if (!errorsExist) {
+            const isPlaylistNameUnique = await this.context.doesPlaylistExist(this.state.playlistName);
+
+            if (isPlaylistNameUnique) {
+                if (this.state.playlistName.length > 0) {
+                    const playlistStatus = await this.context.createPlaylist(this.state.spotifyName, this.state.playlistName);
+                    if (playlistStatus) {
+                        return Actions.playlistHome();
+                    }
+                } else {
+                    return this.displayError('There appears to be an error', 'Please try again')
                 }
             } else {
-                return this.displayError('There appears to be an error', 'Please try again')
+                return this.displayError('Playlist Name Already Exists', 'Please try again');
             }
-        } else {
-            return this.displayError('Playlist Name Already Exists', 'Please try again');
         }
     }
 
@@ -76,7 +87,7 @@ class CreatePlaylist extends Component {
                     <TextInput style={formFillText} placeholder="Playlist Name"
                         onChangeText={(text) => this.updatePlaylistName(text)} />
                 </View>
-                <TouchableOpacity style={getStartedButton} onPress={async () => await this.submitNewPlaylist()}>
+                <TouchableOpacity style={getStartedButton} onPress={() => this.submitNewPlaylist()}>
                     <Text style={formText}>Get Started</Text>
                 </TouchableOpacity>
             </View>

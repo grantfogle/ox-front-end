@@ -55,7 +55,7 @@ class FindPlaylist extends Component {
                     <TextInput style={formFillText} placeholder="Playlist Name"
                         onChangeText={(text) => this.formUpdate(text)} />
                 </View>
-                <TouchableOpacity style={joinButton} onPress={async () => this.searchForPlaylist()}>
+                <TouchableOpacity style={joinButton} onPress={() => this.searchForPlaylist()}>
                     <Text style={formText}>Join Playlist</Text>
                 </TouchableOpacity>
             </View>
