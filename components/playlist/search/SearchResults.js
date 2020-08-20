@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import { OxContext } from '../../../contexts/OxContext';
+import { Actions } from 'react-native-router-flux';
 
 const SearchResults = () => {
     const { searchResults, songDetails, songRow, songName, songText, addSongButton } = styles;
@@ -19,7 +20,8 @@ const SearchResults = () => {
                             </View>
                             <TouchableOpacity style={addSongButton} onPress={async () => {
                                 await addSongToPlaylist(song.uri);
-                                await getPlaylistTracks();
+                                // await getPlaylistTracks();
+                                Actions.playlistHome();
                             }}>
                                 <Text style={songText}>Add</Text>
                             </TouchableOpacity>

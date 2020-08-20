@@ -4,8 +4,8 @@ import { Actions } from 'react-native-router-flux';
 import SearchBar from './search/SearchBar';
 import SearchResults from './search/SearchResults';
 import Song from './song/Song';
-import clientId from '../../secret';
 import { OxContext } from '../../contexts/OxContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class PlaylistHome extends Component {
     static contextType = OxContext;
@@ -13,6 +13,10 @@ class PlaylistHome extends Component {
         super(props);
         this.state = {
         }
+    }
+
+    componentDidMount() {
+        this.context.getPlaylistTracks();
     }
 
     displayPlaylist() {
@@ -26,7 +30,9 @@ class PlaylistHome extends Component {
         return (
             <View style={container}>
                 <SearchBar />
-                {this.displayPlaylist()}
+                <ScrollView>
+                    {this.displayPlaylist()}
+                </ScrollView>
             </View>
         );
     }

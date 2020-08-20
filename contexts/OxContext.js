@@ -255,7 +255,6 @@ class OxContextProvider extends Component {
                 searchSongs: this.searchSongs.bind(this),
                 createPlaylist: this.createPlaylist.bind(this),
                 addSongToPlaylist: this.addSongToPlaylist.bind(this),
-                getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findAPlaylist: this.findAPlaylist.bind(this),
                 getPlaylistTracks: this.getPlaylistTracks.bind(this),
                 findPlaylistOnDB: this.findPlaylistOnDB.bind(this),
